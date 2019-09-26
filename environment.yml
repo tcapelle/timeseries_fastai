@@ -7,3 +7,4 @@ dependencies:
 - fastai==1.0.55
 - seaborn
 - pandas
+- scikit-learn
