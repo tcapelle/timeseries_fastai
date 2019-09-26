@@ -4,7 +4,7 @@ channels:
 - pytorch
 - defaults
 dependencies:
-- fastai==1.0.55
+- fastai==1.0.57
 - seaborn
-- pandas
 - scikit-learn
+- jupyter

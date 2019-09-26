@@ -3,7 +3,7 @@ import torch.nn as nn
 import fastai
 from fastai.vision import *
 
-""" Helper functions to create a improved version of the 1D resnet Architecture proposed in Wnag et Al 2017:
+""" Helper functions to create a improved version of the 1D resnet Architecture proposed in Wang et Al 2017:
 https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7966039&tag=1
 Mostly based on the crappy implementation for keras found here:
 https://github.com/cauchyturing/UCR_Time_Series_Classification_Deep_Learning_Baseline/blob/master/ResNet.py
