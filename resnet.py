@@ -30,15 +30,15 @@ def res_block_1d(nf):
                         conv_layer(nf, nf, ks=3, padding=1, is_1d=True),
                         MergeLayer())
 
-def create_resnet(ni, nout, ks=9): 
+def create_resnet(ni, nout, ks=9, conv_sizes=[64, 128, 128]): 
     "Basic 11 Layer - 1D resnet builder"
-    return nn.Sequential(conv_layer(ni, 64, ks=ks, padding=int(ks/2), is_1d=True),
-                         res_block_1d(64), 
-                         conv_layer(64, 128, ks=ks, padding=int(ks/2), is_1d=True),
-                         res_block_1d(128),
-                         conv_layer(128, 128, ks=ks, padding=int(ks/2), is_1d=True),
-                         res_block_1d(128), 
+    layers = []
+    sizes = zip([ni]+conv_sizes, conv_sizes)
+    for n1, n2 in sizes:
+            layers += [conv_layer(n1, n2, ks=ks, padding=int(ks/2), is_1d=True),
+                       res_block_1d(n2)]
+    return nn.Sequential(*layers, 
                          AdaptiveConcatPool1d(),
                          Flatten(),
-                         nn.Sequential(*bn_drop_lin(2*128,nout))
+                        *bn_drop_lin(2*n2, nout, p=0.1)
                         )
