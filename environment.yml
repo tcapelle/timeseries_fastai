@@ -1,0 +1,9 @@
+name: timeseries
+channels:
+- fastai
+- pytorch
+- defaults
+dependencies:
+- fastai==1.0.55
+- seaborn
+- pandas
