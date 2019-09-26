@@ -2,3 +2,4 @@
 .vscode/settings.json
 __pycache__/resnet.cpython-37.pyc
 models/tmp.pth
+__pycache__/utils.cpython-37.pyc
