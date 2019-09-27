@@ -25,4 +25,4 @@ The default values are 40 epochs and `lr=5e-4`. You can modify this using the `e
 $ python ucr.py --epochs=100 --lr=1e-3
 ```
 
-The whole dataset runs in less than one our on a RTX2080ti with default settings.
+The whole dataset runs in less than one hour on a RTX2080ti with default settings.
