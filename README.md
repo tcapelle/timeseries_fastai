@@ -37,6 +37,9 @@ $ python ucr.py --tasks='All' --arch='All'
 The whole dataset runs in less than one hour on a RTX2080ti with default settings.
 
 ## Results 
+```
+print(tabulate(results,  tablefmt="pipe", headers=results.columns))
+```
 |                                |          MLP |          FCN |       resnet |
 |:-------------------------------|-------------:|-------------:|-------------:|
 | ACSF1                          |   0.42       |   0.2        |   0.2        |
