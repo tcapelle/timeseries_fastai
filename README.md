@@ -37,6 +37,7 @@ $ python ucr.py --tasks='All' --arch='All'
 The whole dataset runs in less than one hour on a RTX2080ti with default settings.
 
 ## Results 
+Params: `epochs = 40` and `lr=1e-3`.
 ```
 from tabulate import tabulate
 print(tabulate(results,  tablefmt="pipe", headers=results.columns))
