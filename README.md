@@ -38,6 +38,7 @@ The whole dataset runs in less than one hour on a RTX2080ti with default setting
 
 ## Results 
 ```
+from tabulate import tabulate
 print(tabulate(results,  tablefmt="pipe", headers=results.columns))
 ```
 |                                |          MLP |          FCN |       resnet |
