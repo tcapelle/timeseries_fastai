@@ -109,3 +109,23 @@ def create_resnet(ni, nout, ks=9, conv_sizes=[64, 128, 128], stride=1):
 
 def create_xresnet(ni, nout, ks=9, conv_sizes=[1,2], expansion=1): 
     return XResNet(expansion=expansion, layers=conv_sizes, c_in=ni, c_out=nout)
+
+
+def create_fcn(ni, nout, ks=9, conv_sizes=[128, 256, 128], stride=1):
+    layers = []
+    sizes = zip([ni]+conv_sizes, conv_sizes)
+    for n1, n2 in sizes:
+            layers += [conv_layer(n1, n2, ks=ks, stride=stride)]
+    return nn.Sequential(*layers, 
+                         AdaptiveConcatPool1d(),
+                         Flatten(),
+                         *bn_drop_lin(2*n2, nout)
+                         )
+
+def create_mlp(ni, nout, linear_sizes=[500, 500, 500]):
+    layers = []
+    sizes = zip([ni]+linear_sizes, linear_sizes+[nout])
+    for n1, n2 in sizes:
+            layers += bn_drop_lin(n1, n2, p=0.2)
+    return nn.Sequential(Flatten(),
+                         *layers)

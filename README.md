@@ -20,9 +20,18 @@ You can also run the resnet in the full UCR data set:
 ```
 $ python ucr.py
 ```
-The default values are 40 epochs and `lr=5e-4`. You can modify this using the `epochs` and `lr` arguments when calling ucr.
+The default values are 40 epochs and `lr=5e-4`. You can modify this using the `epochs` and `lr` arguments when calling ucr. 
 ```
 $ python ucr.py --epochs=100 --lr=1e-3
+```
+You can also chosse the architecture and the task to run with params `arch` and `tasks`.
+```
+$ python ucr.py --epochs=30 --lr=1e-3 --tasks='Adiac' --arch='fcn'
+```
+
+To run everything with default settings:
+```
+$ python ucr.py --tasks='All' --arch='All'
 ```
 
 The whole dataset runs in less than one hour on a RTX2080ti with default settings.

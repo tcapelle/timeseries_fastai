@@ -1,7 +1,7 @@
 import fastai
 import torch
 import torch.nn as nn
-from resnet import create_resnet
+from models import *
 from utils import *
 from download import unzip_data
 from fastai.script import *
@@ -50,36 +50,47 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     bs = max_bs(len(tr_ds))
     print(f'Training for {epochs} epochs with lr = {lr}, bs={bs}')
     db = create_databunch(tr_ds, val_ds, bs)
-    if arch == 'resnet':
+    if arch.lower() == 'resnet':
         model = create_resnet(1, num_classes, ks=9, conv_sizes=[64, 128, 256])
-    if arch == 'FCN':
-
+    elif arch.lower() == 'fcn':
+        model = create_fcn(1, num_classes, ks=9, conv_sizes=[128, 256, 128])
+    elif arch.lower() == 'mlp':
+        model = create_mlp(x_train[0].shape[0], num_classes, [500,500,500])
+    else: 
+        print('Please chosse a model in [resnet, FCN, MLP]')
+        return None
     learn = fastai.basic_train.Learner(db, 
                                        model, 
                                        loss_func = CrossEntropyFlat(), 
                                        metrics=[error_rate],
                                        wd=1e-2)
     learn.fit_one_cycle(epochs, lr)   
-    
+
     #get min error rate
     err = torch.stack([t[0] for t in learn.recorder.metrics]).min()                               
     return err
 
 @call_parse
-def main(epochs:Param("Number of epochs", int)=40,
+def main(arch:Param("Network Architecture [resnet, FCN, MLP, All]", str)='resnet',
+         tasks:Param('Which tasks from UCR to run, [task, All]', str)='Adiac',
+         epochs:Param("Number of epochs", int)=40,
          lr:Param("Learning rate", float)=1e-3
          ):
-    "Training UCR for Resnet"
+    "Training UCR"
     path = unzip_data()
     summary = pd.read_csv(path/'SummaryData.csv', index_col=0)
     flist = summary.index
-    errors = {}
-    for task in flist:
-        try:
-            print(f'Training {task} ({summary.loc[task]})')
-            error = train_task(path, task, epochs, lr)
-            errors[task] = error.numpy().item()
-        except: pass
-    print(errors)
-    (pd.Series(errors, name='error_rate').rename_axis(index='task')
-                                         .to_csv('results.csv', header=True))
+    archs = ['MLP', 'FCN', 'resnet'] if arch.lower()=='all' else [arch]
+    tasks = flist if tasks.lower()=='all' else [tasks]
+    print(f'Training UCR with {archs} tasks: {tasks}')
+    results = pd.DataFrame(index=flist, columns=archs)
+    
+    for task in tasks:
+        for model in archs:
+            try:
+                print(f'Training {task}-{model}\n ({summary.loc[task]})')
+                error = train_task(path, task, model, epochs, lr)
+                results.loc[task, model] = error.numpy().item()
+            except: pass
+    print(results)
+    results.to_csv('results.csv', header=True)
