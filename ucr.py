@@ -71,12 +71,12 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     return err
 
 @call_parse
-def main(arch:Param("Network Architecture [resnet, FCN, MLP, All]", str)='resnet',
-         tasks:Param('Which tasks from UCR to run, [task, All]', str)='Adiac',
-         epochs:Param("Number of epochs", int)=40,
-         lr:Param("Learning rate", float)=1e-3
+def main(arch:Param("Network arch. [resnet, FCN, MLP, All]. (default: \'resnet\')", str)='resnet',
+         tasks:Param("Which tasks from UCR to run, [task, All]. (default: \'All\')", str)='Adiac',
+         epochs:Param("Number of epochs.(default: 40)", int)=40,
+         lr:Param("Learning rate.(default: 1e-3)", float)=1e-3
          ):
-    "Training UCR"
+    "Training UCR script"
     path = unzip_data()
     summary = pd.read_csv(path/'SummaryData.csv', index_col=0)
     flist = summary.index

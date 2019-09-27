@@ -16,11 +16,27 @@ $ jupyter notebook
 The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Series_Classification_Deep_Learning_Baseline) is implemented in Keras/Tf.
 - Notebook 01: This is a basic notebook that implements the Deep Learning models proposed in [Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline](https://arxiv.org/abs/1611.06455). I fine tuned the resnet architecture to get better results than the paper, and to be able to train faster.
 
-You can also run the resnet in the full UCR data set:
+The `ucr.py` script can be used interactively. You can display all possible options with:
+```
+$ python ucr.py --help
+usage: ucr.py [-h] [--arch ARCH] [--tasks TASKS] [--epochs EPOCHS] [--lr LR]
+
+Training UCR script
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --arch ARCH      Network arch. [resnet, FCN, MLP, All]. (default: 'resnet')
+  --tasks TASKS    Which tasks from UCR to run, [task, All]. (default: 'Adiac')
+  --epochs EPOCHS  Number of epochs.(default: 40)
+  --lr LR          Learning rate.(default: 1e-3)
+
+```
+
+To run resnet in the Adiac data set:
 ```
 $ python ucr.py
 ```
-The default values are 40 epochs and `lr=5e-4`. You can modify this using the `epochs` and `lr` arguments when calling ucr. 
+The default values are 40 epochs and `lr=1e-3`. You can modify this using the `epochs` and `lr` arguments when calling ucr. 
 ```
 $ python ucr.py --epochs=100 --lr=1e-3
 ```
