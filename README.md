@@ -19,8 +19,9 @@ The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Serie
 The `ucr.py` script can be used interactively. You can display all possible options with:
 ```
 $ python ucr.py --help
+```
+```
 usage: ucr.py [-h] [--arch ARCH] [--tasks TASKS] [--epochs EPOCHS] [--lr LR]
-
 Training UCR script
 
 optional arguments:
