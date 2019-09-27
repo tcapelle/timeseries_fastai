@@ -14,7 +14,7 @@ $ jupyter notebook
 
 ## Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline
 The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Series_Classification_Deep_Learning_Baseline) is implemented in Keras/Tf.
-- Notebook 01: This is a basic notebook that implements the Deep Learning models proposed in [Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline](https://arxiv.org/abs/1611.06455). I fine tuned the resnet architecture to get better results than the paper, and to be able to train faster.
+- Notebook 01: This is a basic notebook that implements the Deep Learning models proposed in [Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline](https://arxiv.org/abs/1611.06455). 
 
 The `ucr.py` script can be used interactively. You can display all possible options with:
 ```
