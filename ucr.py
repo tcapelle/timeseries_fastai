@@ -39,7 +39,7 @@ def create_databunch(tr_ds, val_ds, bs=64):
     valid_dl = DataLoader(val_ds, batch_size=bs, shuffle=True)
     return DataBunch(train_dl, valid_dl)
 
-def train_task(path, task='Adiac', epochs=40, lr=5e-4):
+def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     
     df_train, df_test = load_df(path, task)
     num_classes = df_train.target.nunique()
@@ -50,15 +50,19 @@ def train_task(path, task='Adiac', epochs=40, lr=5e-4):
     bs = max_bs(len(tr_ds))
     print(f'Training for {epochs} epochs with lr = {lr}, bs={bs}')
     db = create_databunch(tr_ds, val_ds, bs)
-    model = create_resnet(1, num_classes, ks=9, conv_sizes=[64, 128, 256])
-    learn_res = fastai.basic_train.Learner(db, 
+    if arch == 'resnet':
+        model = create_resnet(1, num_classes, ks=9, conv_sizes=[64, 128, 256])
+    if arch == 'FCN':
+
+    learn = fastai.basic_train.Learner(db, 
                                        model, 
                                        loss_func = CrossEntropyFlat(), 
                                        metrics=[error_rate],
                                        wd=1e-2)
-    learn_res.fit_one_cycle(epochs, lr)   
+    learn.fit_one_cycle(epochs, lr)   
+    
     #get min error rate
-    err = torch.stack([t[0] for t in learn_res.recorder.metrics]).min()                               
+    err = torch.stack([t[0] for t in learn.recorder.metrics]).min()                               
     return err
 
 @call_parse
