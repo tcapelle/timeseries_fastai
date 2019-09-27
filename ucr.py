@@ -77,5 +77,5 @@ def main(epochs:Param("Number of epochs", int)=40,
             errors[task] = error.numpy().item()
         except: pass
     print(errors)
-    # (pd.Series(errors, name='error_rate').rename_axis(index='task')
-    #                                      .to_csv('results.csv', header=True))
+    (pd.Series(errors, name='error_rate').rename_axis(index='task')
+                                         .to_csv('results.csv', header=True))
