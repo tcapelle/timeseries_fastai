@@ -83,7 +83,7 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, All]. (default: \'resnet\'
     archs = ['MLP', 'FCN', 'resnet'] if arch.lower()=='all' else [arch]
     tasks = flist if tasks.lower()=='all' else [tasks]
     print(f'Training UCR with {archs} tasks: {tasks}')
-    results = pd.DataFrame(index=flist, columns=archs)
+    results = pd.DataFrame(index=tasks, columns=archs)
     
     for task in tasks:
         for model in archs:
@@ -93,4 +93,8 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, All]. (default: \'resnet\'
                 results.loc[task, model] = error.numpy().item()
             except: pass
     print(results)
-    results.to_csv('results.csv', header=True)
+    if len(tasks)>1: results.to_csv('results.csv', header=True)
+    else: 
+        fname = '-'.join(archs)
+        tnames = '-'.join(tasks)
+        results.to_csv(f'results_{tnames}_{fname}.csv', header=True)
