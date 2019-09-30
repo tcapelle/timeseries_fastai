@@ -44,7 +44,7 @@ def create_inception(ni, nout, kss=[41, 21, 11], stride=1, depth=6, bottleneck_s
     layers = [InceptionModule(ni, kss=kss, use_bottleneck=False, stride=stride), Shortcut(1, 4*nb_filters)]
     layers += (depth-1)*[InceptionModule(4*nb_filters, kss=kss, bottleneck_size=bottleneck_size, stride=stride), 
                          Shortcut(1, 4*nb_filters)]
-    head = [create_head(8*nb_filters, nout)] if head else []]
+    head = [create_head(8*nb_filters, nout)] if head else []
     return  SequentialEx(*layers, *head)
 
 def create_inception_resnet(ni, nout, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1): 
