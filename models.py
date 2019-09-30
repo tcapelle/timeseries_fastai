@@ -44,10 +44,10 @@ class AdaptiveConcatPool1d(nn.Module):
         self.mp = nn.AdaptiveMaxPool1d(self.output_size)
     def forward(self, x): return torch.cat([self.mp(x), self.ap(x)], 1)
 
-def res_block_1d(nf):
+def res_block_1d(nf, ks=[5,3]):
     "Resnet block as described in the paper."
-    return SequentialEx(conv_layer(nf, nf, ks=5),
-                        conv_layer(nf, nf, ks=3, zero_bn=True, act=False),
+    return SequentialEx(conv_layer(nf, nf, ks=ks[0]),
+                        conv_layer(nf, nf, ks=ks[1], zero_bn=True, act=False),
                         MergeLayer())
 
 
@@ -94,13 +94,13 @@ class XResNet(nn.Sequential):
               for i in range(blocks)])
 
 
-def create_resnet(ni, nout, ks=9, conv_sizes=[64, 128, 128], stride=1): 
+def create_resnet(ni, nout, kss=[9,5,3], conv_sizes=[64, 128, 128], stride=1): 
     "Basic 11 Layer - 1D resnet builder"
     layers = []
     sizes = zip([ni]+conv_sizes, conv_sizes)
     for n1, n2 in sizes:
-            layers += [conv_layer(n1, n2, ks=ks, stride=stride),
-                       res_block_1d(n2)]
+            layers += [conv_layer(n1, n2, ks=kss[0], stride=stride),
+                       res_block_1d(n2, kss[1:3])]
     return nn.Sequential(*layers, 
                          AdaptiveConcatPool1d(),
                          Flatten(),

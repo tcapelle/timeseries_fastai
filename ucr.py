@@ -2,6 +2,7 @@ import fastai
 import torch
 import torch.nn as nn
 from models import *
+from inception import *
 from utils import *
 from download import unzip_data
 from fastai.script import *
@@ -29,7 +30,7 @@ def process_dfs(df_train, df_test):
     return x_train, y_train, x_test, y_test
 
 def max_bs(N):
-    N = N//15
+    N = N//6
     k=1
     while (N//2**k)>1: k+=1
     return min(2**k, 32)
@@ -51,11 +52,15 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     print(f'Training for {epochs} epochs with lr = {lr}, bs={bs}')
     db = create_databunch(tr_ds, val_ds, bs)
     if arch.lower() == 'resnet':
-        model = create_resnet(1, num_classes, ks=9, conv_sizes=[64, 128, 256])
+        model = create_resnet(1, num_classes, conv_sizes=[64, 128, 256])
     elif arch.lower() == 'fcn':
         model = create_fcn(1, num_classes, ks=9, conv_sizes=[128, 256, 128])
     elif arch.lower() == 'mlp':
-        model = create_mlp(x_train[0].shape[0], num_classes, [500,500,500])
+        model = create_mlp(1, num_classes, [500,500,500])
+    elif arch.lower() == 'iresnet':
+        model = create_inception_resnet(1, num_classes, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1)
+    elif arch.lower() == 'inception':
+        model = create_inception(1, num_classes)
     else: 
         print('Please chosse a model in [resnet, FCN, MLP]')
         return None
@@ -80,7 +85,7 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, All]. (default: \'resnet\'
     path = unzip_data()
     summary = pd.read_csv(path/'SummaryData.csv', index_col=0)
     flist = summary.index
-    archs = ['MLP', 'FCN', 'resnet'] if arch.lower()=='all' else [arch]
+    archs = ['MLP', 'FCN', 'resnet', 'iresnet', 'inception'] if arch.lower()=='all' else [arch]
     tasks = flist if tasks.lower()=='all' else [tasks]
     print(f'Training UCR with {archs} tasks: {tasks}')
     results = pd.DataFrame(index=tasks, columns=archs)
