@@ -8,7 +8,7 @@ from download import unzip_data
 from fastai.script import *
 from fastai.vision import *
 
-"runs resnet over UCR dataset"
+"runs a bucnh of archs over UCR dataset"
 
 
 def to_TDS(x,y):

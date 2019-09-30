@@ -16,7 +16,8 @@ $ jupyter notebook
 The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Series_Classification_Deep_Learning_Baseline) is implemented in Keras/Tf.
 - Notebook 01: This is a basic notebook that implements the Deep Learning models proposed in [Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline](https://arxiv.org/abs/1611.06455). 
 
-- Notebook 02: Added InceptionTime architecture from [InceptionTime: Finding AlexNet for Time SeriesClassification](https://arxiv.org/pdf/1909.04939.pdf). Need to check if the implementation is identical to paper, please comment.
+## InceptionTime: Finding AlexNet for Time SeriesClassification
+- Notebook 01_inception: Added InceptionTime architecture from [InceptionTime: Finding AlexNet for Time SeriesClassification](https://arxiv.org/pdf/1909.04939.pdf). Need to check if the implementation is identical to paper, please comment.
 
 The `ucr.py` script can be used interactively. You can display all possible options with:
 ```
@@ -28,7 +29,7 @@ Training UCR script
 
 optional arguments:
   -h, --help       show this help message and exit
-  --arch ARCH      Network arch. [resnet, FCN, MLP, All]. (default: 'resnet')
+  --arch ARCH      Network arch. [resnet, FCN, MLP, iresnet, inception, All]. (default: 'resnet')
   --tasks TASKS    Which tasks from UCR to run, [task, All]. (default: 'Adiac')
   --epochs EPOCHS  Number of epochs.(default: 40)
   --lr LR          Learning rate.(default: 1e-3)
