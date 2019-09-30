@@ -17,7 +17,10 @@ The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Serie
 - Notebook 01: This is a basic notebook that implements the Deep Learning models proposed in [Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline](https://arxiv.org/abs/1611.06455). 
 
 ## InceptionTime: Finding AlexNet for Time SeriesClassification
+The original paper repo is [here](https://github.com/hfawaz/InceptionTime)
 - Notebook 01_inception: Added InceptionTime architecture from [InceptionTime: Finding AlexNet for Time SeriesClassification](https://arxiv.org/pdf/1909.04939.pdf). Need to check if the implementation is identical to paper, please comment.
+
+The model is implemented in [inception.py]([inception.py]), you can also find an inception-resnet implemenation.
 
 The `ucr.py` script can be used interactively. You can display all possible options with:
 ```
