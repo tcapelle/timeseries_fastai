@@ -9,6 +9,13 @@ act_fn = nn.ReLU(inplace=True)
 def conv(ni, nf, ks=3, stride=1, bias=False):
     return nn.Conv1d(ni, nf, kernel_size=ks, stride=stride, padding=ks//2, bias=bias)
 
+class Shortcut(Module):
+    "Merge a shortcut with the result of the module by adding them or concatenating thme if `dense=True`."
+    def __init__(self, ks=1, act_fn=act_fn): 
+        self.ks=ks
+        self.act_fn=act_fn
+    def forward(self, x): return act_fn(x+x.orig)
+
 class InceptionModule(nn.Module):
     def __init__(self, ni, use_bottleneck=True, kss=[41, 21, 11], bottleneck_size=32, nb_filters=32, stride=1):
         super().__init__()
@@ -27,7 +34,8 @@ class InceptionModule(nn.Module):
         x = self.conv0(x)
         return self.bn_relu(torch.cat([self.conv1(x), self.conv2(x), self.conv3(x), self.conv_bottle(x)], dim=1))
 
-def create_inception(ni, nout, kss=[41, 21, 11], stride=1, depth=6, bottleneck_size=32):
-    layers = [InceptionModule(ni, kss=kss, bottleneck_size=bottleneck_size, stride=stride), MergeLayer()]
-    layers += (depth-1)*[InceptionModule(128, kss=kss, bottleneck_size=bottleneck_size, stride=stride), MergeLayer()]
-    return  SequentialEx(*layers,AdaptiveConcatPool1d(),Flatten(),nn.Linear(8*bottleneck_size, nout))
+def create_inception(ni, nout, kss=[41, 21, 11], stride=1, depth=6, bottleneck_size=32, head=True):
+    layers = [InceptionModule(ni, kss=kss, bottleneck_size=bottleneck_size, stride=stride), MergeLayer(), nn.ReLU()]
+    layers += (depth-1)*[InceptionModule(128, kss=kss, bottleneck_size=bottleneck_size, stride=stride), MergeLayer(), nn.ReLU()]
+    head = [AdaptiveConcatPool1d(), Flatten(), nn.Linear(8*bottleneck_size, nout)] if head else []
+    return  SequentialEx(*layers, *head)
