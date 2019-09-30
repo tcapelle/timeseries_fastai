@@ -92,9 +92,12 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, All]. (default: \'resnet\'
                 error = train_task(path, task, model, epochs, lr)
                 results.loc[task, model] = error.numpy().item()
             except: pass
-    print(results)
-    if len(tasks)>1: results.to_csv('results.csv', header=True)
+    if len(tasks)>1: 
+        results.to_csv('results.csv', header=True)
+        from tabulate import tabulate
+        print(tabulate(results,  tablefmt="pipe", headers=results.columns))
     else: 
         fname = '-'.join(archs)
         tnames = '-'.join(tasks)
         results.to_csv(f'results_{tnames}_{fname}.csv', header=True)
+        
