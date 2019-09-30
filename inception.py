@@ -29,8 +29,8 @@ class InceptionModule(nn.Module):
         self.conv3 = conv(bottleneck_size if use_bottleneck else ni, nb_filters, kss[2])
         self.conv_bottle = nn.Sequential(nn.MaxPool1d(3, stride, padding=1), 
                             nn.Conv1d(bottleneck_size if use_bottleneck else ni, nb_filters, 1, bias=False))
-        self.bn_relu = nn.Sequential(nn.BatchNorm1d(4*nb_filters))
-                                    #  nn.ReLU())
+        self.bn_relu = nn.Sequential(nn.BatchNorm1d(4*nb_filters)), nn.Relu())
+
     def forward(self, x):
         x = self.bottleneck(x)
         return self.bn_relu(torch.cat([self.conv1(x), self.conv2(x), self.conv3(x), self.conv_bottle(x)], dim=1))
