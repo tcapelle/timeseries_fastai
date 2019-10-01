@@ -15,7 +15,7 @@ from tabulate import tabulate
 def to_TDS(x,y):
     return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
 
-def process_dfs(df_train, df_test):
+def process_dfs(df_train, df_test, unsqueeze=False):
     num_classes = df_train.target.nunique()
     x_train, y_train = df_train.values[:,:-1].astype('float'), df_train.values[:,-1].astype('int')
     x_test, y_test = df_test.values[:,:-1].astype('float'), df_test.values[:,-1].astype('int')
@@ -28,7 +28,9 @@ def process_dfs(df_train, df_test):
 
     y_train = (y_train - y_train.min())/(y_train.max()-y_train.min())*(num_classes-1)
     y_test = (y_test - y_test.min())/(y_test.max()-y_test.min())*(num_classes-1)
-    return x_train, y_train, x_test, y_test
+    if not unsqueeze: return x_train, y_train, x_test, y_test
+    else: return (x_train[:,None, :].astype('float32'), y_train, 
+                  x_test[:, None, :].astype('float32'),  y_test)
 
 def max_bs(N):
     N = N//6
