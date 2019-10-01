@@ -5,5 +5,3 @@ models/tmp.pth
 Univariate_arff/*
 downlaods/*
 dev*
-functions_lbfgs/LBFGS.py
-functions_lbfgs/utils.py
