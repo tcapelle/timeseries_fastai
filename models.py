@@ -126,6 +126,6 @@ def create_mlp(ni, nout, linear_sizes=[500, 500, 500]):
     layers = []
     sizes = zip([ni]+linear_sizes, linear_sizes+[nout])
     for n1, n2 in sizes:
-            layers += bn_drop_lin(n1, n2, p=0.2)
+            layers += bn_drop_lin(n1, n2, p=0.2, actn=act_fn if n2!=nout else None)
     return nn.Sequential(Flatten(),
                          *layers)

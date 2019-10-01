@@ -56,7 +56,7 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     elif arch.lower() == 'fcn':
         model = create_fcn(1, num_classes, ks=9, conv_sizes=[128, 256, 128])
     elif arch.lower() == 'mlp':
-        model = create_mlp(1, num_classes, [500,500,500])
+        model = create_mlp(x_train[0].shape[0], num_classes, [500,500,500])
     elif arch.lower() == 'iresnet':
         model = create_inception_resnet(1, num_classes, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1)
     elif arch.lower() == 'inception':
