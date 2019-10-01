@@ -24,20 +24,15 @@ class InceptionModule(nn.Module):
     "An inception module for TimeSeries, based on https://arxiv.org/pdf/1611.06455.pdf"
     def __init__(self, ni, nb_filters=32, kss=[41, 21, 11], use_bottleneck=True,  bottleneck_size=32,  stride=1):
         super().__init__()
-        if use_bottleneck:
-            self.bottleneck = nn.Conv1d(ni, bottleneck_size, 1, bias=False)
-        else:
-            self.bottleneck = noop
-        self.conv1 = conv(bottleneck_size if use_bottleneck else ni, nb_filters, kss[0])
-        self.conv2 = conv(bottleneck_size if use_bottleneck else ni, nb_filters, kss[1])
-        self.conv3 = conv(bottleneck_size if use_bottleneck else ni, nb_filters, kss[2])
+        if use_bottleneck: self.bottleneck = nn.Conv1d(ni, bottleneck_size, 1, bias=False)
+        else: self.bottleneck = noop
+        self.convs = nn.ModuleList([conv(bottleneck_size if use_bottleneck else ni, nb_filters, ks) for ks in listify(kss)])
         self.conv_bottle = nn.Sequential(nn.MaxPool1d(3, stride, padding=1), 
                             conv(bottleneck_size if use_bottleneck else ni, nb_filters, 1))
         self.bn_relu = nn.Sequential(nn.BatchNorm1d(4*nb_filters), nn.ReLU())
-
     def forward(self, x):
         x = self.bottleneck(x)
-        return self.bn_relu(torch.cat([self.conv1(x), self.conv2(x), self.conv3(x), self.conv_bottle(x)], dim=1))
+        return self.bn_relu(torch.cat([c(x) for c in self.convs]+ [self.conv_bottle(x)], dim=1))
 
 def create_inception(ni, nout, kss=[41, 21, 11], stride=1, depth=6, bottleneck_size=32, nb_filters=32, head=True):
     "Inception time architecture"
