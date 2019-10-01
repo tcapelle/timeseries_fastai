@@ -53,5 +53,5 @@ def create_inception_resnet(ni, nout, kss=[3,5,7], conv_sizes=[64, 128, 256], st
     sizes = zip([ni]+conv_sizes, conv_sizes)
     for n1, n2 in sizes:
         layers += [InceptionModule(n1, n2//4, kss=kss, use_bottleneck=False) if n1==1 else conv_layer(n1, n2, ks=kss[0], stride=stride), res_block_1d(n2, kss[1:3])]
-    return nn.Sequential(*layers, create_head(2*n2, nout, p=0.1))
+    return nn.Sequential(*layers, create_head(n2, nout, p=0.1))
 

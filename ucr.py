@@ -7,6 +7,7 @@ from utils import *
 from download import unzip_data
 from fastai.script import *
 from fastai.vision import *
+from tabulate import tabulate
 
 "runs a bucnh of archs over UCR dataset"
 
@@ -36,8 +37,9 @@ def max_bs(N):
     return min(2**k, 32)
 
 def create_databunch(tr_ds, val_ds, bs=64):
-    train_dl = DataLoader(tr_ds, batch_size=bs, shuffle=True)
-    valid_dl = DataLoader(val_ds, batch_size=bs, shuffle=True)
+    drop_last = True if (len(tr_ds)%bs==1 or len(val_ds)%bs==1) else False #pytorch batchnorm fails with bs=1
+    train_dl = DataLoader(tr_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
+    valid_dl = DataLoader(val_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
     return DataBunch(train_dl, valid_dl)
 
 def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
@@ -46,7 +48,6 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     num_classes = df_train.target.nunique()
     x_train, y_train, x_test, y_test = process_dfs(df_train, df_test)
     tr_ds, val_ds = to_TDS(x_train, y_train), to_TDS(x_test, y_test)
-    
     #compute bs
     bs = max_bs(len(tr_ds))
     print(f'Training for {epochs} epochs with lr = {lr}, bs={bs}')
@@ -56,13 +57,13 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     elif arch.lower() == 'fcn':
         model = create_fcn(1, num_classes, ks=9, conv_sizes=[128, 256, 128])
     elif arch.lower() == 'mlp':
-        model = create_mlp(x_train[0].shape[0], num_classes, [500,500,500])
+        model = create_mlp(x_train[0].shape[0], num_classes)
     elif arch.lower() == 'iresnet':
         model = create_inception_resnet(1, num_classes, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1)
     elif arch.lower() == 'inception':
         model = create_inception(1, num_classes)
     else: 
-        print('Please chosse a model in [resnet, FCN, MLP]')
+        print('Please chosse a model in [resnet, FCN, MLP, inception, iresnet]')
         return None
     learn = fastai.basic_train.Learner(db, 
                                        model, 
@@ -89,19 +90,21 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, All]. (default: \'resnet\'
     tasks = flist if tasks.lower()=='all' else [tasks]
     print(f'Training UCR with {archs} tasks: {tasks}')
     results = pd.DataFrame(index=tasks, columns=archs)
-    
     for task in tasks:
         for model in archs:
             try:
-                print(f'Training {task}-{model}\n ({summary.loc[task]})')
+                print(f'\n>>Training {model} over {task}')
                 error = train_task(path, task, model, epochs, lr)
                 results.loc[task, model] = error.numpy().item()
-            except: pass
+            except: 
+                print('>>Error ocurred:')
+                print(task,model)
+                pass
     if len(tasks)>1: 
         results.to_csv('results.csv', header=True)
-        from tabulate import tabulate
         print(tabulate(results,  tablefmt="pipe", headers=results.columns))
     else: 
+        print(tabulate(results,  tablefmt="pipe", headers=results.columns))
         fname = '-'.join(archs)
         tnames = '-'.join(tasks)
         results.to_csv(f'results_{tnames}_{fname}.csv', header=True)
