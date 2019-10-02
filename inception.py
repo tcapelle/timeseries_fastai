@@ -9,17 +9,6 @@ act_fn = nn.ReLU(inplace=True)
 def conv(ni, nf, ks=3, stride=1, bias=False):
     return nn.Conv1d(ni, nf, kernel_size=ks, stride=stride, padding=ks//2, bias=bias)
 
-class Cat(Module):
-    "Concatenate layers outputs over a given dim"
-    def __init__(self, *layers, dim=1): 
-        self.layers = nn.ModuleList(layers)
-        self.dim=dim
-    def forward(self, x):
-        return torch.cat([l(x) for l in self.layers], dim=self.dim)
-
-class Noop(Module):
-    def forward(self, x): return x
-
 class Shortcut(Module):
     "Merge a shortcut with the result of the module by adding them. Adds Conv, BN and ReLU"
     def __init__(self, ni, nf, act_fn=act_fn): 
@@ -46,9 +35,10 @@ def create_inception(ni, nout, kss=[39, 19, 9], depth=6, bottleneck_size=32, nb_
     n_ks = len(kss) + 1
     for d in range(depth):
         im = SequentialEx(InceptionModule(1 if d==0 else n_ks*nb_filters, kss=kss, bottleneck_size=bottleneck_size))
-        if d%3==2: im.append(Shortcut(n_ks*nb_filters, n_ks*nb_filters))
+        # if d%3==2: im.append(Shortcut(n_ks*nb_filters, n_ks*nb_filters))
+        if d>0: im.append(Shortcut(n_ks*nb_filters, n_ks*nb_filters))        
         layers.append(im)
-    head = [AdaptiveConcatPool1d(), Flatten(), nn.Linear(2*4*nb_filters, nout)] if head else []
+    head = [AdaptiveConcatPool1d(), Flatten(), nn.Linear(2*n_ks*nb_filters, nout)] if head else []
     return  nn.Sequential(*layers, *head)
 
 def create_inception_resnet(ni, nout, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1, head=True): 
