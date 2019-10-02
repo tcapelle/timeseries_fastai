@@ -37,7 +37,8 @@ class InceptionModule(Module):
         self.conv_bottle = nn.Sequential(nn.MaxPool1d(3, stride, padding=1), conv(ni, nb_filters, 1))
         self.bn_relu = nn.Sequential(nn.BatchNorm1d((len(kss)+1)*nb_filters), nn.ReLU())
     def forward(self, x):
-        return self.bn_relu(torch.cat([c(self.bottleneck(x)) for c in self.convs]+[self.conv_bottle(x)], dim=1))
+        bottled = self.bottleneck(x)
+        return self.bn_relu(torch.cat([c(bottled) for c in self.convs]+[self.conv_bottle(x)], dim=1))
 
 def create_inception(ni, nout, kss=[39, 19, 9], depth=6, bottleneck_size=32, nb_filters=32, head=True):
     "Inception time architecture"
