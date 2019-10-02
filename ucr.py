@@ -73,7 +73,7 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=Fals
                                        metrics=[accuracy],
                                        wd=1e-2)
     if mixup: learn = learn.mixup()
-    learn.fit_one_cycle(epochs, lr)   
+    learn.fit_fc(epochs, lr)   
 
     #get min error rate
     err = torch.stack([t[0] for t in learn.recorder.metrics])                              
@@ -105,8 +105,8 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, All]. 
                 print(f'\n>>Training {model} over {task}')
                 error = train_task(path, task, model, epochs, lr, mixup)
                 results.loc[task, model] = error.numpy().item()
-            except: 
-                print('>>Error ocurred:')
+            except Exception as e: 
+                print('>>Error ocurred:', e)
                 print(task,model)
                 pass
     
