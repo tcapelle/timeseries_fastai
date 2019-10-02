@@ -31,6 +31,14 @@ class Cat(Module):
 class Noop(Module):
     def forward(self, x): return x
 
+class Shortcut(Module):
+    "Merge a shortcut with the result of the module by adding them. Adds Conv, BN and ReLU"
+    def __init__(self, ni, nf, act_fn=act_fn): 
+        self.act_fn=act_fn
+        self.conv=conv(ni, nf, 1)
+        self.bn=nn.BatchNorm1d(nf)
+    def forward(self, x): return act_fn(x + self.bn(self.conv(x.orig)))
+
 class InceptionModule(Module):
     "An inception module for TimeSeries, based on https://arxiv.org/pdf/1611.06455.pdf"
     def __init__(self, ni, nb_filters=32, kss=[39, 19, 9], bottleneck_size=32, stride=1):
@@ -45,11 +53,12 @@ class InceptionModule(Module):
 def create_inception(ni, nout, kss=[39, 19, 9], depth=6, bottleneck_size=32, nb_filters=32, head=True):
     "Inception time architecture"
     layers = []
+    n_ks = len(kss) + 1
     for d in range(depth):
-        im = SequentialEx(InceptionModule(1 if d==0 else 4*nb_filters, kss=kss, bottleneck_size=bottleneck_size))
-        if d%3==2: im.append(Shortcut(4*nb_filters, 4*nb_filters))
+        im = SequentialEx(InceptionModule(1 if d==0 else n_ks*nb_filters, kss=kss, bottleneck_size=bottleneck_size))
+        if d%3==2: im.append(Shortcut(n_ks*nb_filters, n_ks*nb_filters))
         layers.append(im)
-    head = [AdaptiveConcatPool1d(), Flatten(),  nn.Linear(2*4*nb_filters, nout)] if head else []
+    head = [AdaptiveConcatPool1d(), Flatten(), nn.Linear(2*4*nb_filters, nout)] if head else []
     return  nn.Sequential(*layers, *head)
 
 def create_inception_resnet(ni, nout, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1, head=True): 
