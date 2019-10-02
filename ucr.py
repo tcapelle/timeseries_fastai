@@ -8,6 +8,7 @@ from download import unzip_data
 from fastai.script import *
 from fastai.vision import *
 from tabulate import tabulate
+from InceptionTime import *
 
 "runs a bucnh of archs over UCR dataset"
 
@@ -63,7 +64,7 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     elif arch.lower() == 'iresnet':
         model = create_inception_resnet(1, num_classes, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1)
     elif arch.lower() == 'inception':
-        model = create_inception(1, num_classes)
+        model = InceptionTime(1, num_classes)
     else: 
         print('Please chosse a model in [resnet, FCN, MLP, inception, iresnet]')
         return None
