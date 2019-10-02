@@ -38,7 +38,7 @@ class InceptionModule(Module):
         else: self.bottleneck = noop
         self.convs = nn.ModuleList([conv(bottleneck_size if (bottleneck_size>1 and ni>1) else ni, nb_filters, ks) for ks in listify(kss)])
         self.conv_bottle = nn.Sequential(nn.MaxPool1d(3, stride, padding=1), conv(ni, nb_filters, 1))
-        self.bn_relu = nn.Sequential(nn.BatchNorm1d(4*nb_filters), nn.ReLU())
+        self.bn_relu = nn.Sequential(nn.BatchNorm1d((len(kss)+1)*nb_filters), nn.ReLU())
     def forward(self, x):
         return self.bn_relu(torch.cat([c(self.bottleneck(x)) for c in self.convs]+[self.conv_bottle(x)], dim=1))
 
@@ -52,11 +52,12 @@ def create_inception(ni, nout, kss=[39, 19, 9], depth=6, bottleneck_size=32, nb_
     head = [AdaptiveConcatPool1d(), Flatten(),  nn.Linear(2*4*nb_filters, nout)] if head else []
     return  nn.Sequential(*layers, *head)
 
-def create_inception_resnet(ni, nout, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1): 
+def create_inception_resnet(ni, nout, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1, head=True): 
     "A resnet with only 1 inception layer"
     layers = []
     sizes = zip([ni]+conv_sizes, conv_sizes)
     for n1, n2 in sizes:
-        layers += [InceptionModule(n1, n2//4, kss=kss, use_bottleneck=False) if n1==1 else conv_layer(n1, n2, ks=kss[0], stride=stride), res_block_1d(n2, kss[1:3])]
-    return nn.Sequential(*layers, create_head(n2, nout, p=0.1))
+        layers += [InceptionModule(n1, n2//(len(kss)+1), kss=kss) if n1==1 else conv_layer(n1, n2, ks=kss[0], stride=stride), res_block_1d(n2, kss[1:3])]
+    head = [AdaptiveConcatPool1d(), Flatten(),  nn.Linear(2*n2, nout)] if head else []
+    return nn.Sequential(*layers, *head)
 
