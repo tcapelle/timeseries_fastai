@@ -41,6 +41,17 @@ def create_inception(ni, nout, kss=[39, 19, 9], depth=6, bottleneck_size=32, nb_
     head = [AdaptiveConcatPool1d(), Flatten(), nn.Linear(2*n_ks*nb_filters, nout)] if head else []
     return  nn.Sequential(*layers, *head)
 
+
+##################
+##Inception Resnet
+##################
+
+def res_block_1d(nf, ks=[5,3]):
+    "Resnet block as described in the paper."
+    return SequentialEx(conv_layer(nf, nf, ks=ks[0]),
+                        conv_layer(nf, nf, ks=ks[1], zero_bn=True, act=False),
+                        MergeLayer())
+
 def create_inception_resnet(ni, nout, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1, head=True): 
     "A resnet with only 1 inception layer"
     layers = []

@@ -12,6 +12,17 @@ from tabulate import tabulate
 "runs a bucnh of archs over UCR dataset"
 
 
+class Cat(Module):
+    "Concatenate layers outputs over a given dim"
+    def __init__(self, *layers, dim=1): 
+        self.layers = nn.ModuleList(layers)
+        self.dim=dim
+    def forward(self, x):
+        return torch.cat([l(x) for l in self.layers], dim=self.dim)
+
+class Noop(Module):
+    def forward(self, x): return x
+
 def to_TDS(x,y):
     return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
 
