@@ -44,7 +44,7 @@ def create_databunch(tr_ds, val_ds, bs=64):
     valid_dl = DataLoader(val_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
     return DataBunch(train_dl, valid_dl)
 
-def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
+def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=False):
     
     df_train, df_test = load_df(path, task)
     num_classes = df_train.target.nunique()
@@ -70,44 +70,48 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     learn = fastai.basic_train.Learner(db, 
                                        model, 
                                        loss_func = CrossEntropyFlat(), 
-                                       metrics=[error_rate],
+                                       metrics=[accuracy],
                                        wd=1e-2)
+    if mixup: learn = learn.mixup()
     learn.fit_one_cycle(epochs, lr)   
 
     #get min error rate
-    err = torch.stack([t[0] for t in learn.recorder.metrics]).min()                               
-    return err
+    err = torch.stack([t[0] for t in learn.recorder.metrics])                              
+    return err.max()
 
 @call_parse
 def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, All]. (default: \'resnet\')", str)='resnet',
          tasks:Param("Which tasks from UCR to run, [task, All]. (default: \'All\')", str)='Adiac',
          epochs:Param("Number of epochs.(default: 40)", int)=40,
-         lr:Param("Learning rate.(default: 1e-3)", float)=1e-3
+         lr:Param("Learning rate.(default: 1e-3)", float)=1e-3, 
+         mixup:Param("Use Mixup", bool)=False, 
+         filename:Param("output filename", str)=None,
          ):
     "Training UCR script"
     path = unzip_data()
     summary = pd.read_csv(path/'SummaryData.csv', index_col=0)
     flist = summary.index
     archs = ['MLP', 'FCN', 'resnet', 'iresnet', 'inception'] if arch.lower()=='all' else [arch]
-    tasks = flist if tasks.lower()=='all' else [tasks]
+    if tasks.lower()=='all':tasks=flist
+    elif tasks.lower()=='bench':
+        tasks =  [ 'Wine', 'BeetleFly', 'InlineSkate', 'MiddlePhalanxTW', 'OliveOil', 'SmallKitchenAppliances', 'WordSynonyms', 
+                'MiddlePhalanxOutlineAgeGroup', 'MoteStrain', 'Phoneme', 'Herring', 'ScreenType', 'ChlorineConcentration'] 
+    else: tasks = [tasks]
     print(f'Training UCR with {archs} tasks: {tasks}')
     results = pd.DataFrame(index=tasks, columns=archs)
     for task in tasks:
         for model in archs:
             try:
                 print(f'\n>>Training {model} over {task}')
-                error = train_task(path, task, model, epochs, lr)
+                error = train_task(path, task, model, epochs, lr, mixup)
                 results.loc[task, model] = error.numpy().item()
             except: 
                 print('>>Error ocurred:')
                 print(task,model)
                 pass
-    if len(tasks)>1: 
-        results.to_csv('results.csv', header=True)
-        print(tabulate(results,  tablefmt="pipe", headers=results.columns))
-    else: 
-        print(tabulate(results,  tablefmt="pipe", headers=results.columns))
-        fname = '-'.join(archs)
-        tnames = '-'.join(tasks)
-        results.to_csv(f'results_{tnames}_{fname}.csv', header=True)
-        
+    
+    fname = '-'.join(archs)
+    tnames = '-'.join(tasks)
+    filename = ifnone(filename, f'results_{tnames}_{fname}.csv')
+    results.to_csv(filename, header=True)
+    print(tabulate(results,  tablefmt="pipe", headers=results.columns))
