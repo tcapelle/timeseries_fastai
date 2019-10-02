@@ -61,7 +61,7 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     elif arch.lower() == 'mlp':
         model = create_mlp(x_train[0].shape[0], num_classes)
     elif arch.lower() == 'iresnet':
-        model = create_inception_resnet(1, num_classes, kss=[3,5,7], conv_sizes=[64, 128, 256], stride=1)
+        model = create_inception_resnet(1, num_classes, kss=[39, 19, 9], conv_sizes=[128, 128, 256], stride=1)
     elif arch.lower() == 'inception':
         model = create_inception(1, num_classes)
     else: 
@@ -79,7 +79,7 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4):
     return err
 
 @call_parse
-def main(arch:Param("Network arch. [resnet, FCN, MLP, All]. (default: \'resnet\')", str)='resnet',
+def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, All]. (default: \'resnet\')", str)='resnet',
          tasks:Param("Which tasks from UCR to run, [task, All]. (default: \'All\')", str)='Adiac',
          epochs:Param("Number of epochs.(default: 40)", int)=40,
          lr:Param("Learning rate.(default: 1e-3)", float)=1e-3
