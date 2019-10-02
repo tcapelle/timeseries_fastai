@@ -6,19 +6,8 @@ from fastai.vision import *
 from models import *
 
 act_fn = nn.ReLU(inplace=True)
-def create_head(ni, nout, p=0):
-    return nn.Sequential(AdaptiveConcatPool1d(),Flatten(),*bn_drop_lin(2*ni, nout, p=p))
-
 def conv(ni, nf, ks=3, stride=1, bias=False):
     return nn.Conv1d(ni, nf, kernel_size=ks, stride=stride, padding=ks//2, bias=bias)
-
-class Shortcut(Module):
-    "Merge a shortcut with the result of the module by adding them. Adds Conv, BN and ReLU"
-    def __init__(self, ni, nf, act_fn=act_fn): 
-        self.act_fn=act_fn
-        self.conv=conv(ni, nf, 1)
-        self.bn=nn.BatchNorm1d(nf)
-    def forward(self, x): return act_fn(x + self.bn(self.conv(x.orig)))
 
 class Cat(Module):
     "Concatenate layers outputs over a given dim"
