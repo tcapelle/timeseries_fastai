@@ -35,9 +35,8 @@ def create_inception(ni, nout, kss=[39, 19, 9], depth=6, bottleneck_size=32, nb_
     n_ks = len(kss) + 1
     for d in range(depth):
         im = SequentialEx(InceptionModule(1 if d==0 else n_ks*nb_filters, kss=kss, bottleneck_size=bottleneck_size))
-        # if d%3==2: im.append(Shortcut(n_ks*nb_filters, n_ks*nb_filters))
-        if d>0: im.append(Shortcut(n_ks*nb_filters, n_ks*nb_filters))        
-        layers.append(im)
+        if d%3==2: im.append(Shortcut(n_ks*nb_filters, n_ks*nb_filters))      
+            layers.append(im)
     head = [AdaptiveConcatPool1d(), Flatten(), nn.Linear(2*n_ks*nb_filters, nout)] if head else []
     return  nn.Sequential(*layers, *head)
 
