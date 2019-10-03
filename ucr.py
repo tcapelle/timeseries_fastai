@@ -42,7 +42,7 @@ def max_bs(N):
 def create_databunch(tr_ds, val_ds, bs=64):
     drop_last = True if (len(tr_ds)%bs==1 or len(val_ds)%bs==1) else False #pytorch batchnorm fails with bs=1
     train_dl = DataLoader(tr_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
-    valid_dl = DataLoader(val_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
+    valid_dl = DataLoader(val_ds, batch_size=2*bs, shuffle=True, drop_last=drop_last)
     return DataBunch(train_dl, valid_dl)
 
 def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=False, one_cycle=True):
