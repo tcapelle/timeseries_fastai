@@ -137,4 +137,5 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, res2ne
     except:
         print("problem saving to HDF, saving to csv")
         results.to_csv(filename + '.csv', header=True)
-    print(tabulate(results,  tablefmt="pipe", headers=results.columns))
+    table = results.loc[slice(None), (slice(None), 'accuracy')]
+    print(tabulate(table,  tablefmt="pipe", headers=table.columns.levels[0]))
