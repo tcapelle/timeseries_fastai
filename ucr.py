@@ -25,6 +25,8 @@ def to_TDS(x,y):
     return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
 
 def process_dfs(df_train, df_test, unsqueeze=False):
+    df_train.dropna(inplace=True)
+    df_test.dropna(inplace=True)
     num_classes = df_train.target.nunique()
     x_train, y_train = df_train.values[:,:-1].astype('float32'), df_train.values[:,-1].astype('int')
     x_test, y_test = df_test.values[:,:-1].astype('float32'), df_test.values[:,-1].astype('int')
