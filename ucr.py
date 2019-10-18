@@ -3,25 +3,15 @@ import torch
 import torch.nn as nn
 from models import *
 from inception import *
+from res2net import create_res2net
 from utils import *
 from download import unzip_data
 from fastai.script import *
 from fastai.vision import *
 from tabulate import tabulate
+import time
 
 "runs a bucnh of archs over UCR dataset"
-
-
-class Cat(Module):
-    "Concatenate layers outputs over a given dim"
-    def __init__(self, *layers, dim=1): 
-        self.layers = nn.ModuleList(layers)
-        self.dim=dim
-    def forward(self, x):
-        return torch.cat([l(x) for l in self.layers], dim=self.dim)
-
-class Noop(Module):
-    def forward(self, x): return x
 
 def to_TDS(x,y):
     return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
@@ -52,10 +42,10 @@ def max_bs(N):
 def create_databunch(tr_ds, val_ds, bs=64):
     drop_last = True if (len(tr_ds)%bs==1 or len(val_ds)%bs==1) else False #pytorch batchnorm fails with bs=1
     train_dl = DataLoader(tr_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
-    valid_dl = DataLoader(val_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
+    valid_dl = DataLoader(val_ds, batch_size=2*bs, shuffle=True, drop_last=drop_last)
     return DataBunch(train_dl, valid_dl)
 
-def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=False):
+def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=False, one_cycle=True):
     
     df_train, df_test = load_df(path, task)
     num_classes = df_train.target.nunique()
@@ -75,6 +65,8 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=Fals
         model = create_inception_resnet(1, num_classes, kss=[39, 19, 9], conv_sizes=[128, 128, 256], stride=1)
     elif arch.lower() == 'inception':
         model = create_inception(1, num_classes)
+    elif arch.lower() == 'res2net':
+        model = create_res2net(1, num_classes)
     else: 
         print('Please chosse a model in [resnet, FCN, MLP, inception, iresnet]')
         return None
@@ -84,18 +76,28 @@ def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=Fals
                                        metrics=[accuracy],
                                        wd=1e-2)
     if mixup: learn = learn.mixup()
-    learn.fit_fc(epochs, lr)   
+    if one_cycle: learn.fit_one_cycle(epochs, lr)   
+    else: learn.fit_fc(epochs, lr)                             
+    return learn
 
-    #get min error rate
-    err = torch.stack([t[0] for t in learn.recorder.metrics])                              
-    return err.max()
+def compute_metrics(learn):
+    "compute oguiza Metrics on UCR"
+    early_stop = math.ceil(np.argmin(learn.recorder.losses) / len(learn.data.train_dl))
+    acc_ = learn.recorder.metrics[-1][0].item()
+    acces_ = learn.recorder.metrics[early_stop - 1][0].item()
+    accmax_ = np.max(learn.recorder.metrics)
+    loss_ = learn.recorder.losses[-1].item()
+    val_loss_ = learn.recorder.val_losses[-1].item()
+    return acc_, acces_, accmax_, loss_, val_loss_ 
+
 
 @call_parse
-def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, All]. (default: \'resnet\')", str)='resnet',
+def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, res2net, All]. (default: \'resnet\')", str)='resnet',
          tasks:Param("Which tasks from UCR to run, [task, All]. (default: \'All\')", str)='Adiac',
          epochs:Param("Number of epochs.(default: 40)", int)=40,
          lr:Param("Learning rate.(default: 1e-3)", float)=1e-3, 
          mixup:Param("Use Mixup", bool)=False, 
+         one_cycle:Param("Use once_cycle policy", bool)=True,
          filename:Param("output filename", str)=None,
          ):
     "Training UCR script"
@@ -109,13 +111,17 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, All]. 
                 'MiddlePhalanxOutlineAgeGroup', 'MoteStrain', 'Phoneme', 'Herring', 'ScreenType', 'ChlorineConcentration'] 
     else: tasks = [tasks]
     print(f'Training UCR with {archs} tasks: {tasks}')
-    results = pd.DataFrame(index=tasks, columns=archs)
+    columns = ['epochs', 'loss', 'val_loss', 'accuracy', 'accuracy_ts', 'max_accuracy', 'time (s)']
+    results = pd.DataFrame(index=tasks, columns=pd.MultiIndex.from_product([archs, columns]))
     for task in tasks:
         for model in archs:
             try:
                 print(f'\n>>Training {model} over {task}')
-                error = train_task(path, task, model, epochs, lr, mixup)
-                results.loc[task, model] = error.numpy().item()
+                start_time = time.time()
+                learner = train_task(path, task, model, epochs, lr, mixup, one_cycle)
+                acc_, acces_, accmax_, loss_, val_loss_  = compute_metrics(learner)
+                duration = '{:.0f}'.format(time.time() - start_time)
+                results.loc[task, (model, slice(None))] = epochs, loss_, val_loss_ ,acc_, acces_, accmax_, duration
             except Exception as e: 
                 print('>>Error ocurred:', e)
                 print(task,model)
@@ -123,6 +129,13 @@ def main(arch:Param("Network arch. [resnet, FCN, MLP, inception, iresnet, All]. 
     
     fname = '-'.join(archs)
     tnames = '-'.join(tasks)
-    filename = ifnone(filename, f'results_{tnames}_{fname}.csv')
-    results.to_csv(filename, header=True)
-    print(tabulate(results,  tablefmt="pipe", headers=results.columns))
+    filename = ifnone(filename, f'results_{tnames}_{fname}')
+    
+    try:
+        print(results.head())
+        results.to_hdf(filename + '.hdf', key='df')
+    except:
+        print("problem saving to HDF, saving to csv")
+        results.to_csv(filename + '.csv', header=True)
+    table = results.loc[slice(None), (slice(None), 'accuracy')]
+    print(tabulate(table,  tablefmt="pipe", headers=table.columns.levels[0]))

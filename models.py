@@ -129,3 +129,14 @@ def create_mlp(ni, nout, linear_sizes=[500, 500, 500]):
             layers += bn_drop_lin(n1, n2, p=0.2, actn=act_fn if n2!=nout else None)
     return nn.Sequential(Flatten(),
                          *layers)
+
+class Cat(Module):
+    "Concatenate layers outputs over a given dim"
+    def __init__(self, *layers, dim=1): 
+        self.layers = nn.ModuleList(layers)
+        self.dim=dim
+    def forward(self, x):
+        return torch.cat([l(x) for l in self.layers], dim=self.dim)
+
+class Noop(Module):
+    def forward(self, x): return x

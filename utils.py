@@ -2,7 +2,9 @@ import numpy as np
 import pandas as pd
 from scipy.io import arff
 import matplotlib.pyplot as plt
-import seaborn as sns
+import seaborn as sns 
+import torch.nn as nn
+from fastai.callbacks.hooks import params_size
 
 "this functions are based on https://github.com/mb4310/Time-Series"
 
