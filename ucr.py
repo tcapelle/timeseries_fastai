@@ -13,25 +13,31 @@ import time
 
 "runs a bucnh of archs over UCR dataset"
 
-def to_TDS(x,y):
-    return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
+
+def get_lists(df_train, df_test):
+    "get item lists to create databunch"
+    x_train, y_train, x_test, y_test = process_dfs(df_train, df_test)
+    train_list = ItemList(x_train[:, None, :])
+    test_list = ItemList(x_test[:, None, :])
+    return ItemLists('.', train_list, test_list).label_from_lists(y_train, y_test, label_cls=CategoryList)
+
+# def to_TDS(x,y):
+#     return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
 
 def process_dfs(df_train, df_test, unsqueeze=False):
     num_classes = df_train.target.nunique()
-    x_train, y_train = df_train.values[:,:-1].astype('float'), df_train.values[:,-1].astype('int')
-    x_test, y_test = df_test.values[:,:-1].astype('float'), df_test.values[:,-1].astype('int')
+    x_train, y_train = df_train.values[:,:-1].astype('float32'), df_train.values[:,-1].astype('int')
+    x_test, y_test = df_test.values[:,:-1].astype('float32'), df_test.values[:,-1].astype('int')
 
     x_train_mean = x_train.mean()
     x_train_std = x_train.std()
-
+    #scale
     x_train = (x_train - x_train_mean)/(x_train_std)
     x_test = (x_test - x_train_mean)/(x_train_std)
 
-    y_train = (y_train - y_train.min())/(y_train.max()-y_train.min())*(num_classes-1)
-    y_test = (y_test - y_test.min())/(y_test.max()-y_test.min())*(num_classes-1)
-    if not unsqueeze: return x_train, y_train, x_test, y_test
-    else: return (x_train[:,None, :].astype('float32'), y_train, 
-                  x_test[:, None, :].astype('float32'),  y_test)
+    if not unsqueeze: return x_train.astype('float32'), y_train.astype('int'), x_test.astype('float32'), y_test.astype('int')
+    else: return (x_train[:,None, :].astype('float32'), y_train.astype('int'), 
+                  x_test[:, None, :].astype('float32'),  y_test.astype('int'))
 
 def max_bs(N):
     N = N//6
@@ -39,28 +45,28 @@ def max_bs(N):
     while (N//2**k)>1: k+=1
     return min(2**k, 32)
 
-def create_databunch(tr_ds, val_ds, bs=64):
+def create_databunch(src, bs=64):
+    tr_ds, val_ds = src.train, src.valid
     drop_last = True if (len(tr_ds)%bs==1 or len(val_ds)%bs==1) else False #pytorch batchnorm fails with bs=1
     train_dl = DataLoader(tr_ds, batch_size=bs, shuffle=True, drop_last=drop_last)
     valid_dl = DataLoader(val_ds, batch_size=2*bs, shuffle=True, drop_last=drop_last)
     return DataBunch(train_dl, valid_dl)
 
 def train_task(path, task='Adiac', arch='resnet', epochs=40, lr=5e-4, mixup=False, one_cycle=True):
-    
+    "trains arch over task with params"
     df_train, df_test = load_df(path, task)
     num_classes = df_train.target.nunique()
-    x_train, y_train, x_test, y_test = process_dfs(df_train, df_test)
-    tr_ds, val_ds = to_TDS(x_train, y_train), to_TDS(x_test, y_test)
+    src = get_lists(df_train, df_test)
     #compute bs
-    bs = max_bs(len(tr_ds))
+    bs = max_bs(len(src.train))
     print(f'Training for {epochs} epochs with lr = {lr}, bs={bs}')
-    db = create_databunch(tr_ds, val_ds, bs)
+    db = create_databunch(src, bs)
     if arch.lower() == 'resnet':
         model = create_resnet(1, num_classes, conv_sizes=[64, 128, 256])
     elif arch.lower() == 'fcn':
         model = create_fcn(1, num_classes, ks=9, conv_sizes=[128, 256, 128])
     elif arch.lower() == 'mlp':
-        model = create_mlp(x_train[0].shape[0], num_classes)
+        model = create_mlp(src.train[0][0].shape[1], num_classes)
     elif arch.lower() == 'iresnet':
         model = create_inception_resnet(1, num_classes, kss=[39, 19, 9], conv_sizes=[128, 128, 256], stride=1)
     elif arch.lower() == 'inception':
