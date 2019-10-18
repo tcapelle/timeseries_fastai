@@ -8,3 +8,4 @@ dependencies:
 - seaborn
 - scikit-learn
 - jupyter
+- tabulate
