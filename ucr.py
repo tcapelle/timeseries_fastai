@@ -21,8 +21,8 @@ def get_lists(df_train, df_test):
     test_list = ItemList(x_test[:, None, :])
     return ItemLists('.', train_list, test_list).label_from_lists(y_train, y_test, label_cls=CategoryList)
 
-# def to_TDS(x,y):
-#     return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
+def to_TDS(x,y):
+    return TensorDataset(torch.Tensor(x).unsqueeze(dim=1),  torch.Tensor(y).long())
 
 def process_dfs(df_train, df_test, unsqueeze=False):
     num_classes = df_train.target.nunique()
