@@ -76,7 +76,7 @@ class XResNet(nn.Sequential):
         sizes = [c_in,32,32,64]
         # for i in range(3):
         #     stem.append(conv_layer(sizes[i], sizes[i+1], ks=9 if i==0 else 5, stride=2 if i==0 else 1))
-        stem.append(conv_layer(1, 64, ks=9, stride=1))
+        stem.append(conv_layer(c_in, 64, ks=9, stride=1))
         block_szs = [64//expansion,64,128,256]
         blocks = [self._make_layer(expansion, block_szs[i], block_szs[i+1], l, 1)
                   for i,l in enumerate(layers)]
