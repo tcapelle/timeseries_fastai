@@ -19,7 +19,8 @@ def no_emp_dim(x):
 
 # Cell
 def maybe_unsqueeze(x):
-    return tensor(x).unsqueeze(0) if len(x.shape)==1 else tensor(x)
+    x = tensor(x)
+    return x.unsqueeze(0) if len(x.shape)==1 else x
 
 # Cell
 def show_array(array, ax=None, figsize=None, title=None, ctx=None, tx=None, **kwargs):
@@ -43,7 +44,7 @@ def show_array(array, ax=None, figsize=None, title=None, ctx=None, tx=None, **kw
 
 # Cell
 class TSeries(TensorBase):
-    "Basic Timeseries class"
+    "Basic Timeseries wrapper"
 #     def __init__(self, x):
 #         super().__init__(maybe_unsqueeze(x))
 

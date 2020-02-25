@@ -11,6 +11,9 @@ index = {"no_emp_dim": "00_core.ipynb",
          "load_df_ucr": "00_core.ipynb",
          "get_x": "00_core.ipynb",
          "get_y": "00_core.ipynb",
+         "TSBlock": "01_data.ipynb",
+         "TSDataLoaders": "01_data.ipynb",
+         "stack_train_valid": "01_data.ipynb",
          "AdaptiveConcatPool1d": "02_models.inception.ipynb",
          "conv": "02_models.inception.ipynb",
          "act_fn": "02_models.inception.ipynb",
@@ -19,6 +22,7 @@ index = {"no_emp_dim": "00_core.ipynb",
          "create_inception": "02_models.inception.ipynb"}
 
 modules = ["core.py",
+           "data.py",
            "models/inception.py"]
 
 doc_url = "https://tcapelle.github.io/timeseries_fastai/"
