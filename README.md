@@ -4,12 +4,13 @@
 
 # timeseries_fastai
 
-This is a port to fastai2 from this repo
+A fastai2 timeseries repo!
 
 ## Getting Started
 
 ```python
 from fastai2.basics import *
+from fastai2.callback.all import *
 from timeseries_fastai.core import *
 from timeseries_fastai.data import *
 from timeseries_fastai.models.inception import *
@@ -367,12 +368,212 @@ learn = Learner(dls, inception, metrics=[accuracy])
 ```
 
 ```python
-learn.fit(5, 0.001)
+learn.fit_one_cycle(25, 1e-3)
 ```
 
-    (#5) [0,1.0972908735275269,1.3116531372070312,0.6086956262588501,'00:01']
-    (#5) [1,1.0614722967147827,1.1361106634140015,0.6470588445663452,'00:01']
-    (#5) [2,1.045316219329834,1.0613058805465698,0.6854220032691956,'00:01']
-    (#5) [3,1.0245380401611328,1.8741352558135986,0.43989768624305725,'00:01']
-    (#5) [4,1.0085417032241821,1.5247629880905151,0.48081842064857483,'00:01']
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>4.542264</td>
+      <td>3.617529</td>
+      <td>0.030691</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>4.136417</td>
+      <td>3.625725</td>
+      <td>0.030691</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3.854969</td>
+      <td>3.637391</td>
+      <td>0.030691</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3.607037</td>
+      <td>3.640668</td>
+      <td>0.030691</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>3.392601</td>
+      <td>3.579307</td>
+      <td>0.071611</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3.203232</td>
+      <td>3.328092</td>
+      <td>0.127877</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3.048132</td>
+      <td>2.932842</td>
+      <td>0.225064</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>2.881940</td>
+      <td>2.600225</td>
+      <td>0.271100</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>2.718797</td>
+      <td>2.178436</td>
+      <td>0.388747</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>2.549301</td>
+      <td>2.019035</td>
+      <td>0.381074</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>2.392547</td>
+      <td>1.675599</td>
+      <td>0.488491</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>2.241712</td>
+      <td>2.142292</td>
+      <td>0.360614</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>2.105224</td>
+      <td>1.619634</td>
+      <td>0.511509</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>1.972625</td>
+      <td>1.382407</td>
+      <td>0.567775</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>1.853862</td>
+      <td>1.456197</td>
+      <td>0.534527</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>1.734383</td>
+      <td>1.211880</td>
+      <td>0.631714</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>1.622275</td>
+      <td>1.073925</td>
+      <td>0.708440</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>1.515192</td>
+      <td>1.048840</td>
+      <td>0.667519</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>1.416882</td>
+      <td>0.974738</td>
+      <td>0.769821</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>1.328363</td>
+      <td>0.981020</td>
+      <td>0.723785</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>1.248659</td>
+      <td>0.984357</td>
+      <td>0.736573</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>1.172296</td>
+      <td>0.977382</td>
+      <td>0.744246</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>1.103067</td>
+      <td>0.903992</td>
+      <td>0.772379</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>1.040495</td>
+      <td>0.895779</td>
+      <td>0.785166</td>
+      <td>00:02</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>0.984594</td>
+      <td>0.893522</td>
+      <td>0.785166</td>
+      <td>00:02</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```python
+interp = ClassificationInterpretation.from_learner(learn)
+```
+
+
+
+
+
+```python
+interp.plot_confusion_matrix(figsize=(10,10))
+```
+
+
+![png](docs/images/output_14_0.png)
 
