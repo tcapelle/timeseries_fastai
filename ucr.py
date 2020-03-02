@@ -54,8 +54,8 @@ MiddlePhalanxOutlineAgeGroup
 MiddlePhalanxOutlineCorrect
 MiddlePhalanxTW
 MoteStrain
-NonInvasiveFatalECGThorax1
-NonInvasiveFatalECGThorax2
+NonInvasiveFetalECGThorax1
+NonInvasiveFetalECGThorax2
 OliveOil
 OSULeaf
 PhalangesOutlinesCorrect
