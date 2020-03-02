@@ -16,7 +16,78 @@ The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Serie
 ## InceptionTime: Finding AlexNet for Time SeriesClassification
 The original paper repo is [here](https://github.com/hfawaz/InceptionTime)
 
-- Notebook 02: Added InceptionTime architecture from [InceptionTime: Finding AlexNet for Time SeriesClassification](https://arxiv.org/pdf/1909.04939.pdf). Need to check if the implementation is identical to paper, please comment.
+- Notebook 02: Added InceptionTime architecture from [InceptionTime: Finding AlexNet for Time SeriesClassification](https://arxiv.org/pdf/1909.04939.pdf). 
+
+## Results
+> Results for InceptionTime
+
+You can run the benchmark using:
+
+`$python ucr.py --arch='inception' --tasks='all' --filename='inception.csv' --mixup=0.2`
+
+### Default Values:
+- `lr` = 1e-3
+- `opt` = 'ranger'
+- `epochs` = 40
+- `fp16` = True
+
+```python
+import pandas as pd
+from pathlib import Path
+```
+
+```python
+results_inception = pd.read_csv(Path.cwd().parent/'inception.csv', index_col=0)
+results_inception
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>acc</th>
+      <th>acc_max</th>
+      <th>train_loss</th>
+      <th>val_loss</th>
+    </tr>
+    <tr>
+      <th>task</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Adiac</th>
+      <td>0.063939</td>
+      <td>0.063939</td>
+      <td>3.254499</td>
+      <td>4.328088</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 ## Getting Started
 
@@ -30,17 +101,6 @@ from timeseries_fastai.models import *
 ```python
 ucr_path = untar_data(URLs.UCR)
 ```
-
-```python
-ucr_path/'St'
-```
-
-
-
-
-    Path('/home/tc256760/.fastai/data/Univariate2018_arff/St')
-
-
 
 ```python
 df_train, df_test = load_df_ucr(ucr_path, 'StarLightCurves')
@@ -58,7 +118,7 @@ x_cols = df.columns[0:-2].to_list()
 ```
 
 ```python
-df
+df.head()
 ```
 
 
@@ -226,171 +286,27 @@ df
       <td>b'3'</td>
       <td>False</td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>9231</th>
-      <td>0.723503</td>
-      <td>0.722803</td>
-      <td>0.722803</td>
-      <td>0.723603</td>
-      <td>0.725203</td>
-      <td>0.727403</td>
-      <td>0.730303</td>
-      <td>0.733903</td>
-      <td>0.738003</td>
-      <td>0.742803</td>
-      <td>...</td>
-      <td>0.671702</td>
-      <td>0.675702</td>
-      <td>0.680402</td>
-      <td>0.686102</td>
-      <td>0.692602</td>
-      <td>0.700002</td>
-      <td>0.708403</td>
-      <td>0.717803</td>
-      <td>b'3'</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>9232</th>
-      <td>0.629604</td>
-      <td>0.636304</td>
-      <td>0.643404</td>
-      <td>0.650704</td>
-      <td>0.658304</td>
-      <td>0.666204</td>
-      <td>0.674304</td>
-      <td>0.682504</td>
-      <td>0.691004</td>
-      <td>0.699604</td>
-      <td>...</td>
-      <td>0.603804</td>
-      <td>0.603204</td>
-      <td>0.602104</td>
-      <td>0.600404</td>
-      <td>0.598204</td>
-      <td>0.595404</td>
-      <td>0.592004</td>
-      <td>0.588104</td>
-      <td>b'3'</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>9233</th>
-      <td>0.602902</td>
-      <td>0.604202</td>
-      <td>0.605802</td>
-      <td>0.607502</td>
-      <td>0.609402</td>
-      <td>0.611402</td>
-      <td>0.613502</td>
-      <td>0.615902</td>
-      <td>0.618302</td>
-      <td>0.620902</td>
-      <td>...</td>
-      <td>0.544002</td>
-      <td>0.549502</td>
-      <td>0.555002</td>
-      <td>0.560502</td>
-      <td>0.566002</td>
-      <td>0.571402</td>
-      <td>0.576802</td>
-      <td>0.582202</td>
-      <td>b'1'</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>9234</th>
-      <td>-0.525899</td>
-      <td>-0.532599</td>
-      <td>-0.538699</td>
-      <td>-0.544299</td>
-      <td>-0.549399</td>
-      <td>-0.553999</td>
-      <td>-0.558199</td>
-      <td>-0.561899</td>
-      <td>-0.565199</td>
-      <td>-0.568099</td>
-      <td>...</td>
-      <td>-0.339999</td>
-      <td>-0.364799</td>
-      <td>-0.391999</td>
-      <td>-0.421799</td>
-      <td>-0.454199</td>
-      <td>-0.489399</td>
-      <td>-0.527399</td>
-      <td>-0.568299</td>
-      <td>b'2'</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>9235</th>
-      <td>-0.224100</td>
-      <td>-0.223200</td>
-      <td>-0.219900</td>
-      <td>-0.214400</td>
-      <td>-0.206600</td>
-      <td>-0.196800</td>
-      <td>-0.185000</td>
-      <td>-0.171300</td>
-      <td>-0.155800</td>
-      <td>-0.138600</td>
-      <td>...</td>
-      <td>-0.279800</td>
-      <td>-0.273400</td>
-      <td>-0.268500</td>
-      <td>-0.265300</td>
-      <td>-0.263800</td>
-      <td>-0.264100</td>
-      <td>-0.266300</td>
-      <td>-0.270600</td>
-      <td>b'3'</td>
-      <td>True</td>
-    </tr>
   </tbody>
 </table>
-<p>9236 rows × 1026 columns</p>
+<p>5 rows × 1026 columns</p>
 </div>
-
-
-
-```python
-df.target.unique()
-```
-
-
-
-
-    array([b'3', b'1', b'2'], dtype=object)
 
 
 
 ```python
 dls = TSDataLoaders.from_df(df, x_cols=x_cols, label_col='target', valid_col='valid_col', bs=16)
 ```
+
+```python
+dls.vocab
+```
+
+
+
+
+    (#3) [b'1',b'2',b'3']
+
+
 
 ```python
 inception = create_inception(1, len(dls.vocab))
@@ -457,16 +373,13 @@ learn.fit_one_cycle(5, 1e-3)
 
 ```python
 interp = ClassificationInterpretation.from_learner(learn)
-```
-
-
-
-
-
-```python
 interp.plot_confusion_matrix()
 ```
 
 
-![png](docs/images/output_20_0.png)
+
+
+
+
+![png](docs/images/output_23_1.png)
 
