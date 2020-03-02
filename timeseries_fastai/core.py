@@ -3,8 +3,7 @@
 __all__ = ['no_emp_dim', 'maybe_unsqueeze', 'show_array', 'TSeries', 'get_ucr', 'load_df_ucr', 'get_x', 'get_y']
 
 # Cell
-from fastai2.torch_basics import *
-from fastai2.data.all import *
+from .imports import *
 
 # Cell
 import pandas as pd
@@ -37,7 +36,7 @@ def show_array(array, ax=None, figsize=None, title=None, ctx=None, tx=None, **kw
     tx = ifnone(tx,np.arange(arrays[0].shape[0]))
     label = kwargs.pop('label', 'x')
     for a, c in zip(arrays, ['b', 'c', 'm', 'y', 'k',]):
-        ax.plot(tx, a, '-*'+c,label=label, **kwargs)
+        ax.plot(tx, a, '-'+c,label=label, **kwargs)
     if title is not None: ax.set_title(title)
     ax.legend()
     return ax
@@ -45,9 +44,6 @@ def show_array(array, ax=None, figsize=None, title=None, ctx=None, tx=None, **kw
 # Cell
 class TSeries(TensorBase):
     "Basic Timeseries wrapper"
-#     def __init__(self, x):
-#         super().__init__(maybe_unsqueeze(x))
-
     @classmethod
     def create(cls, x):
         return cls(maybe_unsqueeze(x))
@@ -74,7 +70,7 @@ def get_ucr():
     return ucr_path_2018.parent/ucr_path_2018.name.replace('2018', '')
 
 # Cell
-#export
+# "this functions are based on https://github.com/mb4310/Time-Series"
 def load_df_ucr(path, task):
     "Loads arff files from UCR"
     try:
@@ -86,7 +82,7 @@ def load_df_ucr(path, task):
             dfs.append(pd.DataFrame(data[0]))
         return dfs
     except:
-        print('Error loading files')
+        print(f'Error loading files: {path}/{task}')
 
 # Cell
 def get_x(row):

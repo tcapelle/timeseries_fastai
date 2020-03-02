@@ -6,6 +6,7 @@ __all__ = ['TSBlock', 'TSDataLoaders', 'stack_train_valid']
 from .core import *
 from fastai2.basics import *
 from fastai2.torch_core import *
+from fastai2.vision.data import get_grid
 
 # Cell
 def TSBlock(cls=TSeries): return TransformBlock(type_tfms=cls.create)

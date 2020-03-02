@@ -3,6 +3,6 @@
     "Overview": "/",
     "Core": "/core",
     "Data": "/data",
-    "Title": "/models.inception"
+    "Timeseries Models": "/models"
   }
 }

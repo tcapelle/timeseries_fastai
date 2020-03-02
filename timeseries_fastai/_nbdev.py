@@ -14,16 +14,20 @@ index = {"no_emp_dim": "00_core.ipynb",
          "TSBlock": "01_data.ipynb",
          "TSDataLoaders": "01_data.ipynb",
          "stack_train_valid": "01_data.ipynb",
-         "AdaptiveConcatPool1d": "02_models.inception.ipynb",
-         "conv": "02_models.inception.ipynb",
-         "act_fn": "02_models.inception.ipynb",
-         "Shortcut": "02_models.inception.ipynb",
-         "InceptionModule": "02_models.inception.ipynb",
-         "create_inception": "02_models.inception.ipynb"}
+         "act_fn": "02_models.ipynb",
+         "AdaptiveConcatPool1d": "02_models.ipynb",
+         "create_mlp": "02_models.ipynb",
+         "create_fcn": "02_models.ipynb",
+         "res_block_1d": "02_models.ipynb",
+         "create_resnet": "02_models.ipynb",
+         "Shortcut": "02_models.ipynb",
+         "conv": "02_models.ipynb",
+         "InceptionModule": "02_models.ipynb",
+         "create_inception": "02_models.ipynb"}
 
 modules = ["core.py",
            "data.py",
-           "models/inception.py"]
+           "models.py"]
 
 doc_url = "https://tcapelle.github.io/timeseries_fastai/"
 
