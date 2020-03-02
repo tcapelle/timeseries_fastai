@@ -27,6 +27,20 @@ class TSDataLoaders(DataLoaders):
                            item_tfms=item_tfms,
                            batch_tfms=batch_tfms)
         return cls.from_dblock(dblock, df, path=path, **kwargs)
+    @classmethod
+    @delegates(DataLoaders.from_dblock)
+    def from_dfs(cls, df_train, df_valid, path='.', x_cols=None, label_col=None,
+                y_block=None, item_tfms=None, batch_tfms=None, **kwargs):
+        df = stack_train_valid(df_train, df_valid)
+        return cls.from_df(df, path, x_cols=x_cols, valid_col='valid_col', label_col=label_col,
+                y_block=y_block, item_tfms=item_tfms, batch_tfms=batch_tfms,**kwargs)
+
+# Cell
+@typedispatch
+def show_batch(x: TSeries, y, samples, ctxs=None, max_n=10,rows=None, cols=None, figsize=None, **kwargs):
+    if ctxs is None: ctxs = get_grid(min(len(samples), max_n), rows=rows, cols=cols, add_vert=1, figsize=figsize)
+    ctxs = show_batch[object](x, y, samples=samples, ctxs=ctxs, max_n=max_n, **kwargs)
+    return ctxs
 
 # Cell
 def stack_train_valid(df_train, df_valid):
