@@ -8,6 +8,8 @@ In short, if you have anaconda, execute:
 
 `$ pip install fastai_timeseries`
 
+and you are good to go.
+
 ## Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline
 The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Series_Classification_Deep_Learning_Baseline) is implemented in Keras/Tf.
 
@@ -19,7 +21,6 @@ The original paper repo is [here](https://github.com/hfawaz/InceptionTime)
 - Notebook 02: Added InceptionTime architecture from [InceptionTime: Finding AlexNet for Time SeriesClassification](https://arxiv.org/pdf/1909.04939.pdf). 
 
 ## Results
-> Results for InceptionTime
 
 You can run the benchmark using:
 
@@ -78,10 +79,10 @@ results_inception
   <tbody>
     <tr>
       <th>Adiac</th>
-      <td>0.063939</td>
-      <td>0.063939</td>
-      <td>3.254499</td>
-      <td>4.328088</td>
+      <td>0.017903</td>
+      <td>0.017903</td>
+      <td>4.137124</td>
+      <td>3.630809</td>
     </tr>
   </tbody>
 </table>
@@ -309,6 +310,14 @@ dls.vocab
 
 
 ```python
+dls.show_batch()
+```
+
+
+![png](docs/images/output_20_0.png)
+
+
+```python
 inception = create_inception(1, len(dls.vocab))
 ```
 
@@ -334,38 +343,38 @@ learn.fit_one_cycle(5, 1e-3)
   <tbody>
     <tr>
       <td>0</td>
-      <td>0.346574</td>
-      <td>0.216900</td>
-      <td>0.926906</td>
-      <td>00:15</td>
+      <td>0.435074</td>
+      <td>0.436959</td>
+      <td>0.855634</td>
+      <td>00:16</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>0.262913</td>
-      <td>0.274731</td>
-      <td>0.888417</td>
+      <td>0.267858</td>
+      <td>0.156461</td>
+      <td>0.950097</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>0.194458</td>
-      <td>0.131948</td>
-      <td>0.968917</td>
+      <td>0.222864</td>
+      <td>0.140310</td>
+      <td>0.967824</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>0.154791</td>
-      <td>0.126375</td>
-      <td>0.967581</td>
-      <td>00:15</td>
+      <td>0.154482</td>
+      <td>0.116798</td>
+      <td>0.969038</td>
+      <td>00:16</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>0.109763</td>
-      <td>0.101232</td>
-      <td>0.973774</td>
-      <td>00:15</td>
+      <td>0.119808</td>
+      <td>0.107089</td>
+      <td>0.972195</td>
+      <td>00:18</td>
     </tr>
   </tbody>
 </table>
@@ -381,5 +390,5 @@ interp.plot_confusion_matrix()
 
 
 
-![png](docs/images/output_23_1.png)
+![png](docs/images/output_24_1.png)
 
