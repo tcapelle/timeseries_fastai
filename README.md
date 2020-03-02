@@ -20,18 +20,18 @@ The original paper repo is [here](https://github.com/hfawaz/InceptionTime)
 
 ## Getting Started
 
-```
-from fastai2.basics import *
+```python
+from timeseries_fastai.imports import *
 from timeseries_fastai.core import *
 from timeseries_fastai.data import *
 from timeseries_fastai.models import *
 ```
 
-```
+```python
 ucr_path = untar_data(URLs.UCR)
 ```
 
-```
+```python
 ucr_path/'St'
 ```
 
@@ -42,22 +42,22 @@ ucr_path/'St'
 
 
 
-```
+```python
 df_train, df_test = load_df_ucr(ucr_path, 'StarLightCurves')
 ```
 
     Loading files from: /home/tc256760/.fastai/data/Univariate2018_arff/StarLightCurves
 
 
-```
+```python
 df = stack_train_valid(df_train, df_test)
 ```
 
-```
+```python
 x_cols = df.columns[0:-2].to_list()
 ```
 
-```
+```python
 df
 ```
 
@@ -377,7 +377,7 @@ df
 
 
 
-```
+```python
 df.target.unique()
 ```
 
@@ -388,38 +388,85 @@ df.target.unique()
 
 
 
-```
+```python
 dls = TSDataLoaders.from_df(df, x_cols=x_cols, label_col='target', valid_col='valid_col', bs=16)
 ```
 
-```
+```python
 inception = create_inception(1, len(dls.vocab))
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-10-1e19dbad814c> in <module>
-    ----> 1 inception = create_inception(1, len(dls.vocab))
-    
-
-    NameError: name 'create_inception' is not defined
-
-
-```
+```python
 learn = Learner(dls, inception, metrics=[accuracy])
 ```
 
-```
+```python
 learn.fit_one_cycle(5, 1e-3)
 ```
 
-```
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.346574</td>
+      <td>0.216900</td>
+      <td>0.926906</td>
+      <td>00:15</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.262913</td>
+      <td>0.274731</td>
+      <td>0.888417</td>
+      <td>00:15</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.194458</td>
+      <td>0.131948</td>
+      <td>0.968917</td>
+      <td>00:15</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.154791</td>
+      <td>0.126375</td>
+      <td>0.967581</td>
+      <td>00:15</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.109763</td>
+      <td>0.101232</td>
+      <td>0.973774</td>
+      <td>00:15</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```python
 interp = ClassificationInterpretation.from_learner(learn)
 ```
 
+
+
+
+
+```python
+interp.plot_confusion_matrix()
 ```
-interp.plot_confusion_matrix(figsize=(10,10))
-```
+
+
+![png](docs/images/output_20_0.png)
+
