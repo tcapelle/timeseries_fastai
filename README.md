@@ -79,10 +79,17 @@ results_inception
   <tbody>
     <tr>
       <th>Adiac</th>
-      <td>0.017903</td>
-      <td>0.017903</td>
-      <td>4.137124</td>
-      <td>3.630809</td>
+      <td>0.03</td>
+      <td>0.03</td>
+      <td>5.46</td>
+      <td>3.62</td>
+    </tr>
+    <tr>
+      <th>ArrowHead</th>
+      <td>0.30</td>
+      <td>0.30</td>
+      <td>2.03</td>
+      <td>1.11</td>
     </tr>
   </tbody>
 </table>
