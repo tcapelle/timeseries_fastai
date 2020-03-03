@@ -2,8 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"no_emp_dim": "00_core.ipynb",
-         "maybe_unsqueeze": "00_core.ipynb",
+index = {"maybe_unsqueeze": "00_core.ipynb",
          "show_array": "00_core.ipynb",
          "TSeries": "00_core.ipynb",
          "URLs.UCR": "00_core.ipynb",
@@ -12,8 +11,8 @@ index = {"no_emp_dim": "00_core.ipynb",
          "get_x": "00_core.ipynb",
          "get_y": "00_core.ipynb",
          "TSBlock": "01_data.ipynb",
-         "TSDataLoaders": "01_data.ipynb",
          "stack_train_valid": "01_data.ipynb",
+         "TSDataLoaders": "01_data.ipynb",
          "act_fn": "02_models.ipynb",
          "AdaptiveConcatPool1d": "02_models.ipynb",
          "create_mlp": "02_models.ipynb",
