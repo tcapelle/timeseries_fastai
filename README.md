@@ -6,7 +6,7 @@
 
 In short, if you have anaconda, execute:
 
-`$ pip install fastai_timeseries`
+`$ pip install timeseries_fastai`
 
 and you are good to go.
 
