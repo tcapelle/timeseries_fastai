@@ -39,7 +39,7 @@ from pathlib import Path
 
 ```python
 results_inception = pd.read_csv(Path.cwd().parent/'inception.csv', index_col=0)
-results_inception
+results_inception.head(10)
 ```
 
 
@@ -79,17 +79,73 @@ results_inception
   <tbody>
     <tr>
       <th>Adiac</th>
-      <td>0.03</td>
-      <td>0.03</td>
-      <td>5.46</td>
-      <td>3.62</td>
+      <td>0.83</td>
+      <td>0.83</td>
+      <td>1.54</td>
+      <td>1.31</td>
     </tr>
     <tr>
       <th>ArrowHead</th>
-      <td>0.30</td>
-      <td>0.30</td>
-      <td>2.03</td>
-      <td>1.11</td>
+      <td>0.84</td>
+      <td>0.89</td>
+      <td>0.47</td>
+      <td>0.60</td>
+    </tr>
+    <tr>
+      <th>Beef</th>
+      <td>0.57</td>
+      <td>0.60</td>
+      <td>1.22</td>
+      <td>1.27</td>
+    </tr>
+    <tr>
+      <th>BeetleFly</th>
+      <td>0.85</td>
+      <td>1.00</td>
+      <td>0.29</td>
+      <td>0.38</td>
+    </tr>
+    <tr>
+      <th>BirdChicken</th>
+      <td>0.80</td>
+      <td>0.95</td>
+      <td>0.25</td>
+      <td>0.55</td>
+    </tr>
+    <tr>
+      <th>Car</th>
+      <td>0.85</td>
+      <td>0.85</td>
+      <td>0.58</td>
+      <td>0.74</td>
+    </tr>
+    <tr>
+      <th>CBF</th>
+      <td>0.99</td>
+      <td>1.00</td>
+      <td>0.44</td>
+      <td>0.37</td>
+    </tr>
+    <tr>
+      <th>ChlorineConcentration</th>
+      <td>0.77</td>
+      <td>0.77</td>
+      <td>0.61</td>
+      <td>0.70</td>
+    </tr>
+    <tr>
+      <th>CinCECGTorso</th>
+      <td>0.65</td>
+      <td>0.68</td>
+      <td>0.64</td>
+      <td>1.06</td>
+    </tr>
+    <tr>
+      <th>Coffee</th>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>0.33</td>
+      <td>0.21</td>
     </tr>
   </tbody>
 </table>
@@ -350,38 +406,38 @@ learn.fit_one_cycle(5, 1e-3)
   <tbody>
     <tr>
       <td>0</td>
-      <td>0.435074</td>
-      <td>0.436959</td>
-      <td>0.855634</td>
-      <td>00:16</td>
+      <td>0.536860</td>
+      <td>0.263519</td>
+      <td>0.901773</td>
+      <td>00:15</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>0.267858</td>
-      <td>0.156461</td>
-      <td>0.950097</td>
+      <td>0.325206</td>
+      <td>0.252334</td>
+      <td>0.894488</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>0.222864</td>
-      <td>0.140310</td>
-      <td>0.967824</td>
+      <td>0.214342</td>
+      <td>0.145046</td>
+      <td>0.954832</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>0.154482</td>
-      <td>0.116798</td>
-      <td>0.969038</td>
-      <td>00:16</td>
+      <td>0.148120</td>
+      <td>0.120016</td>
+      <td>0.970495</td>
+      <td>00:15</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>0.119808</td>
-      <td>0.107089</td>
-      <td>0.972195</td>
-      <td>00:18</td>
+      <td>0.114034</td>
+      <td>0.116838</td>
+      <td>0.970860</td>
+      <td>00:16</td>
     </tr>
   </tbody>
 </table>
