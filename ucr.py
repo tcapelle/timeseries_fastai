@@ -168,6 +168,9 @@ def run_tasks(tasks, arch='resnet', lr=1e-3, epochs=1, mixup=0.2, fp16=True):
     results = [compute_metrics(train_task(PATH, task, arch, epochs, lr, mixup, fp16)) for task in tasks]
     return pd.DataFrame(data=results, columns=['acc', 'acc_max', 'train_loss', 'val_loss'], index=tasks)
 
+def list2csv(a, sep=', '):
+    return sep.join([f'{i:.2f}' for i in a])+'\n'
+
 @call_parse
 def main(
     arch:    Param("Network arch. [resnet, FCN, MLP, inception, All]. (default: \'resnet\')", str)='resnet',
@@ -182,7 +185,7 @@ def main(
     mom:     Param("Momentum", float)=0.9,
     eps:     Param("epsilon", float)=1e-6,
     beta:    Param("SAdam softplus beta", float)=0.,
-    mixup: Param("Mixup", float)=0.,
+    mixup: Param("Mixup", float)=0.2,
     fp16:  Param("Use mixed precision training", int)=1,
     ):
 
@@ -200,13 +203,13 @@ def main(
         tasks =  [ 'Wine', 'BeetleFly', 'InlineSkate', 'MiddlePhalanxTW', 'OliveOil', 'SmallKitchenAppliances', 'WordSynonyms', 
                 'MiddlePhalanxOutlineAgeGroup', 'MoteStrain', 'Phoneme', 'Herring', 'ScreenType', 'ChlorineConcentration'] 
     else: tasks = [tasks]
-    results = []
-    for task in tasks:
-        dls = get_dls(PATH, task)
-        learn = Learner(dls, model=get_model(dls, arch), opt_func=opt_func, \
-                metrics=[accuracy], loss_func=LabelSmoothingCrossEntropy())
-        if fp16: learn = learn.to_fp16()
-        cbs = MixUp(mixup) if mixup else []
-        learn.fit_flat_cos(epochs, lr, wd=1e-2, cbs=cbs)
-        results.append(compute_metrics(learn))
-    pd.DataFrame(results, columns=['acc', 'acc_max', 'train_loss', 'val_loss'], index=pd.Index(tasks, name='task')).to_csv(filename)
+    with open(filename, 'w') as f:
+        f.write('task, acc, acc_max, train_loss, val_loss\n')
+        for task in tasks:
+            dls = get_dls(PATH, task)
+            learn = Learner(dls, model=get_model(dls, arch), opt_func=opt_func, \
+                    metrics=[accuracy], loss_func=LabelSmoothingCrossEntropy())
+            if fp16: learn = learn.to_fp16()
+            cbs = MixUp(mixup) if mixup else []
+            learn.fit_flat_cos(epochs, lr, wd=1e-2, cbs=cbs)
+            f.write(task +', '+ list2csv(compute_metrics(learn)))
