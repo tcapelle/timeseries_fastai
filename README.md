@@ -1,14 +1,26 @@
 # timeseries_fastai
-> This repository aims to implement TimeSeries classification/regression algorithms. It makes extensive use of fastai training methods.
+> This repository aims to implement TimeSeries classification/regression algorithms. It makes extensive use of fastai V2!
 
 
 ## Installation
 
-In short, if you have anaconda, execute:
+You will need to install fastai V2 from [here](https://github.com/fastai/fastai2) and then you can do from within the environment where you installed fastai V2:
 
-`$ pip install timeseries_fastai`
+```bash
+pip install timeseries_fastai
+```
 
 and you are good to go.
+
+### TL;DR
+```bash
+git clone https://github.com/fastai/fastai2
+cd fastai2
+conda env create -f environment.yml
+source activate fastai2
+pip install fastai2 timeseries_fastai
+
+```
 
 ## Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline
 The original paper repo is [here](https://github.com/cauchyturing/UCR_Time_Series_Classification_Deep_Learning_Baseline) is implemented in Keras/Tf.
@@ -362,13 +374,13 @@ dls = TSDataLoaders.from_df(df, x_cols=x_cols, label_col='target', valid_col='va
 ```
 
 ```python
-dls.vocab
+dls.c
 ```
 
 
 
 
-    (#3) [b'1',b'2',b'3']
+    3
 
 
 
@@ -406,38 +418,38 @@ learn.fit_one_cycle(5, 1e-3)
   <tbody>
     <tr>
       <td>0</td>
-      <td>0.536860</td>
-      <td>0.263519</td>
-      <td>0.901773</td>
-      <td>00:15</td>
+      <td>0.509495</td>
+      <td>0.236320</td>
+      <td>0.897037</td>
+      <td>00:16</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>0.325206</td>
-      <td>0.252334</td>
-      <td>0.894488</td>
+      <td>0.286740</td>
+      <td>0.141372</td>
+      <td>0.959082</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>0.214342</td>
-      <td>0.145046</td>
-      <td>0.954832</td>
+      <td>0.210632</td>
+      <td>0.150028</td>
+      <td>0.952040</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>0.148120</td>
-      <td>0.120016</td>
-      <td>0.970495</td>
+      <td>0.150178</td>
+      <td>0.121942</td>
+      <td>0.961753</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>0.114034</td>
-      <td>0.116838</td>
-      <td>0.970860</td>
-      <td>00:16</td>
+      <td>0.119138</td>
+      <td>0.116969</td>
+      <td>0.967581</td>
+      <td>00:15</td>
     </tr>
   </tbody>
 </table>
