@@ -61,9 +61,10 @@ class TSeries(TensorBase):
 URLs.UCR = 'http://www.timeseriesclassification.com/Downloads/Archives/Univariate2018_arff.zip'
 
 # Cell
-def get_ucr():
+@delegates(untar_data)
+def get_ucr(**kwargs):
     "zipped file has different name as .zip"
-    ucr_path_2018 = untar_data(URLs.UCR)
+    ucr_path_2018 = untar_data(URLs.UCR, **kwargs)
     return ucr_path_2018.parent/ucr_path_2018.name.replace('2018', '')
 
 # Cell

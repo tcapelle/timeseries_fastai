@@ -175,14 +175,14 @@ from timeseries_fastai.models import *
 ```
 
 ```python
-ucr_path = untar_data(URLs.UCR)
+ucr_path = get_ucr()
 ```
 
 ```python
 df_train, df_test = load_df_ucr(ucr_path, 'StarLightCurves')
 ```
 
-    Loading files from: /home/tc256760/.fastai/data/Univariate2018_arff/StarLightCurves
+    Loading files from: /home/tc256760/.fastai/data/Univariate_arff/StarLightCurves
 
 
 ```python
