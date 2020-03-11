@@ -6,120 +6,25 @@ from timeseries_fastai.core import *
 from timeseries_fastai.models import *
 
 PATH = get_ucr()
-NON_NAN_TASKS = """Adiac
-ArrowHead
-Beef
-BeetleFly
-BirdChicken
-Car
-CBF
-ChlorineConcentration
-CinCECGTorso
-Coffee
-Computers
-CricketX
-CricketY
-CricketZ
-DiatomSizeReduction
-DistalPhalanxOutlineAgeGroup
-DistalPhalanxOutlineCorrect
-DistalPhalanxTW
-Earthquakes
-ECG200
-ECG5000
-ECGFiveDays
-ElectricDevices
-FaceAll
-FaceFour
-FacesUCR
-FiftyWords
-Fish
-FordA
-FordB
-GunPoint
-Ham
-HandOutlines
-Haptics
-Herring
-InlineSkate
-InsectWingbeatSound
-ItalyPowerDemand
-LargeKitchenAppliances
-Lightning2
-Lightning7
-Mallat
-Meat
-MedicalImages
-MiddlePhalanxOutlineAgeGroup
-MiddlePhalanxOutlineCorrect
-MiddlePhalanxTW
-MoteStrain
-NonInvasiveFetalECGThorax1
-NonInvasiveFetalECGThorax2
-OliveOil
-OSULeaf
-PhalangesOutlinesCorrect
-Phoneme
-Plane
-ProximalPhalanxOutlineAgeGroup
-ProximalPhalanxOutlineCorrect
-ProximalPhalanxTW
-RefrigerationDevices
-ScreenType
-ShapeletSim
-ShapesAll
-SmallKitchenAppliances
-SonyAIBORobotSurface1
-SonyAIBORobotSurface2
-StarLightCurves
-Strawberry
-SwedishLeaf
-Symbols
-SyntheticControl
-ToeSegmentation1
-ToeSegmentation2
-Trace
-TwoLeadECG
-TwoPatterns
-UWaveGestureLibraryAll
-UWaveGestureLibraryX
-UWaveGestureLibraryY
-UWaveGestureLibraryZ
-Wafer
-Wine
-WordSynonyms
-Worms
-WormsTwoClass
-Yoga
-ACSF1
-BME
-EthanolLevel
-FreezerRegularTrain
-FreezerSmallTrain
-GunPointAgeSpan
-GunPointMaleVersusFemale
-GunPointOldVersusYoung
-InsectEPGRegularTrain
-InsectEPGSmallTrain
-PigAirwayPressure
-PigArtPressure
-PigCVP
-PowerCons
-SmoothSubspace
-UMD
-Fungi
-HouseTwenty
-SemgHandGenderCh2
-SemgHandMovementCh2
-SemgHandSubjectCh2
-MixedShapes
-MixedShapesSmallTrain
-EOGHorizontalSignal
-EOGVerticalSignal
-Rock
-Crop
-Chinatown
-MelbournePedestrian""".split()
+NON_NAN_TASKS = '''ACSF1 Adiac ArrowHead BME Beef BeetleFly BirdChicken CBF Car Chinatown 
+ChlorineConcentration CinCECGTorso Coffee Computers CricketX CricketY CricketZ Crop 
+DiatomSizeReduction DistalPhalanxOutlineAgeGroup DistalPhalanxOutlineCorrect 
+DistalPhalanxTW ECG200 ECG5000 ECGFiveDays EOGHorizontalSignal EOGVerticalSignal 
+Earthquakes ElectricDevices EthanolLevel FaceAll FaceFour FacesUCR FiftyWords Fish 
+FordA FordB FreezerRegularTrain FreezerSmallTrain Fungi GunPoint GunPointAgeSpan 
+GunPointMaleVersusFemale GunPointOldVersusYoung Ham HandOutlines Haptics Herring 
+HouseTwenty InlineSkate InsectEPGRegularTrain InsectEPGSmallTrain InsectWingbeatSound 
+ItalyPowerDemand LargeKitchenAppliances Lightning2 Lightning7 Mallat Meat MedicalImages 
+MelbournePedestrian MiddlePhalanxOutlineAgeGroup MiddlePhalanxOutlineCorrect MiddlePhalanxTW 
+MixedShapesRegularTrain MixedShapesSmallTrain MoteStrain NonInvasiveFetalECGThorax1 
+NonInvasiveFetalECGThorax2 OSULeaf OliveOil PhalangesOutlinesCorrect Phoneme PigAirwayPressure 
+PigArtPressure PigCVP Plane PowerCons ProximalPhalanxOutlineAgeGroup ProximalPhalanxOutlineCorrect 
+ProximalPhalanxTW RefrigerationDevices Rock ScreenType SemgHandGenderCh2 SemgHandMovementCh2 
+SemgHandSubjectCh2 ShapeletSim ShapesAll SmallKitchenAppliances SmoothSubspace 
+SonyAIBORobotSurface1 SonyAIBORobotSurface2 StarLightCurves Strawberry SwedishLeaf Symbols 
+SyntheticControl ToeSegmentation1 ToeSegmentation2 Trace TwoLeadECG TwoPatterns UMD 
+UWaveGestureLibraryAll UWaveGestureLibraryX UWaveGestureLibraryY UWaveGestureLibraryZ Wafer 
+Wine WordSynonyms Worms WormsTwoClass Yoga'''.split()
 
 def compute_metrics(learn):
     "compute oguiza Metrics on UCR"

@@ -30,7 +30,7 @@ class TSDataLoaders(DataLoaders):
         y_block = ifnone(y_block, CategoryBlock)
         splitter = RandomSplitter(valid_pct, seed=seed) if valid_col is None else ColSplitter(valid_col)
         dblock = DataBlock(blocks=(TSBlock, y_block),
-                           get_x=ColReader(x_cols),
+                           get_x=lambda o: o[x_cols].astype(np.float32),
                            get_y=ColReader(label_col),
                            splitter=splitter,
                            item_tfms=item_tfms,

@@ -186,210 +186,19 @@ df_train, df_test = load_df_ucr(ucr_path, 'StarLightCurves')
 
 
 ```python
-df = stack_train_valid(df_train, df_test)
+x_cols = df_train.columns[0:-2].to_list()
 ```
 
 ```python
-x_cols = df.columns[0:-2].to_list()
+dls = TSDataLoaders.from_dfs(df_train, df_test, x_cols=x_cols, label_col='target', bs=16)
 ```
-
-```python
-df.head()
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>att1</th>
-      <th>att2</th>
-      <th>att3</th>
-      <th>att4</th>
-      <th>att5</th>
-      <th>att6</th>
-      <th>att7</th>
-      <th>att8</th>
-      <th>att9</th>
-      <th>att10</th>
-      <th>...</th>
-      <th>att1017</th>
-      <th>att1018</th>
-      <th>att1019</th>
-      <th>att1020</th>
-      <th>att1021</th>
-      <th>att1022</th>
-      <th>att1023</th>
-      <th>att1024</th>
-      <th>target</th>
-      <th>valid_col</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.537303</td>
-      <td>0.531103</td>
-      <td>0.528503</td>
-      <td>0.529403</td>
-      <td>0.533603</td>
-      <td>0.540903</td>
-      <td>0.551103</td>
-      <td>0.564003</td>
-      <td>0.579603</td>
-      <td>0.597603</td>
-      <td>...</td>
-      <td>0.545903</td>
-      <td>0.543903</td>
-      <td>0.541003</td>
-      <td>0.537203</td>
-      <td>0.532303</td>
-      <td>0.526403</td>
-      <td>0.519503</td>
-      <td>0.511403</td>
-      <td>b'3'</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.588398</td>
-      <td>0.593898</td>
-      <td>0.599098</td>
-      <td>0.604098</td>
-      <td>0.608798</td>
-      <td>0.613397</td>
-      <td>0.617797</td>
-      <td>0.622097</td>
-      <td>0.626097</td>
-      <td>0.630097</td>
-      <td>...</td>
-      <td>0.246499</td>
-      <td>0.256199</td>
-      <td>0.266499</td>
-      <td>0.277399</td>
-      <td>0.288799</td>
-      <td>0.300899</td>
-      <td>0.313599</td>
-      <td>0.326899</td>
-      <td>b'3'</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>-0.049900</td>
-      <td>-0.041500</td>
-      <td>-0.033400</td>
-      <td>-0.025600</td>
-      <td>-0.018100</td>
-      <td>-0.010800</td>
-      <td>-0.003800</td>
-      <td>0.003000</td>
-      <td>0.009600</td>
-      <td>0.015900</td>
-      <td>...</td>
-      <td>-0.161601</td>
-      <td>-0.149201</td>
-      <td>-0.136401</td>
-      <td>-0.123201</td>
-      <td>-0.109701</td>
-      <td>-0.095901</td>
-      <td>-0.081701</td>
-      <td>-0.067100</td>
-      <td>b'1'</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1.337005</td>
-      <td>1.319805</td>
-      <td>1.302905</td>
-      <td>1.286305</td>
-      <td>1.270005</td>
-      <td>1.254005</td>
-      <td>1.238304</td>
-      <td>1.223005</td>
-      <td>1.208104</td>
-      <td>1.193504</td>
-      <td>...</td>
-      <td>1.298505</td>
-      <td>1.307705</td>
-      <td>1.316505</td>
-      <td>1.324905</td>
-      <td>1.332805</td>
-      <td>1.340205</td>
-      <td>1.347005</td>
-      <td>1.353205</td>
-      <td>b'3'</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.769801</td>
-      <td>0.775301</td>
-      <td>0.780401</td>
-      <td>0.785101</td>
-      <td>0.789401</td>
-      <td>0.793301</td>
-      <td>0.796801</td>
-      <td>0.799901</td>
-      <td>0.802601</td>
-      <td>0.805101</td>
-      <td>...</td>
-      <td>0.744501</td>
-      <td>0.747301</td>
-      <td>0.750701</td>
-      <td>0.754801</td>
-      <td>0.759501</td>
-      <td>0.765001</td>
-      <td>0.771301</td>
-      <td>0.778401</td>
-      <td>b'3'</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 1026 columns</p>
-</div>
-
-
-
-```python
-dls = TSDataLoaders.from_df(df, x_cols=x_cols, label_col='target', valid_col='valid_col', bs=16)
-```
-
-```python
-dls.c
-```
-
-
-
-
-    3
-
-
 
 ```python
 dls.show_batch()
 ```
 
 
-![png](docs/images/output_20_0.png)
+![png](docs/images/output_17_0.png)
 
 
 ```python
@@ -418,37 +227,37 @@ learn.fit_one_cycle(5, 1e-3)
   <tbody>
     <tr>
       <td>0</td>
-      <td>0.509495</td>
-      <td>0.236320</td>
-      <td>0.897037</td>
-      <td>00:16</td>
+      <td>0.346502</td>
+      <td>1.069310</td>
+      <td>0.855270</td>
+      <td>00:15</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>0.286740</td>
-      <td>0.141372</td>
-      <td>0.959082</td>
+      <td>0.253006</td>
+      <td>0.180050</td>
+      <td>0.940748</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>0.210632</td>
-      <td>0.150028</td>
-      <td>0.952040</td>
+      <td>0.187220</td>
+      <td>0.450394</td>
+      <td>0.787033</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>0.150178</td>
-      <td>0.121942</td>
-      <td>0.961753</td>
+      <td>0.160097</td>
+      <td>0.117180</td>
+      <td>0.969767</td>
       <td>00:15</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>0.119138</td>
-      <td>0.116969</td>
-      <td>0.967581</td>
+      <td>0.119194</td>
+      <td>0.105545</td>
+      <td>0.970253</td>
       <td>00:15</td>
     </tr>
   </tbody>
@@ -465,5 +274,5 @@ interp.plot_confusion_matrix()
 
 
 
-![png](docs/images/output_24_1.png)
+![png](docs/images/output_21_1.png)
 
