@@ -175,14 +175,14 @@ from timeseries_fastai.models import *
 ```
 
 ```python
-ucr_path = get_ucr()
+PATH = Path.cwd().parent
 ```
 
 ```python
-df_train, df_test = load_df_ucr(ucr_path, 'StarLightCurves')
+df_train, df_test = load_df_ucr(PATH, 'Adiac')
 ```
 
-    Loading files from: /home/tc256760/.fastai/data/Univariate_arff/StarLightCurves
+    Loading files from: /home/tc256760/Documents/timeseries_fastai/Adiac
 
 
 ```python
@@ -227,52 +227,39 @@ learn.fit_one_cycle(5, 1e-3)
   <tbody>
     <tr>
       <td>0</td>
-      <td>0.346502</td>
-      <td>1.069310</td>
-      <td>0.855270</td>
-      <td>00:15</td>
+      <td>3.948751</td>
+      <td>3.637887</td>
+      <td>0.028133</td>
+      <td>00:02</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>0.253006</td>
-      <td>0.180050</td>
-      <td>0.940748</td>
-      <td>00:15</td>
+      <td>3.705492</td>
+      <td>3.507715</td>
+      <td>0.094629</td>
+      <td>00:02</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>0.187220</td>
-      <td>0.450394</td>
-      <td>0.787033</td>
-      <td>00:15</td>
+      <td>3.418483</td>
+      <td>5.099520</td>
+      <td>0.038363</td>
+      <td>00:02</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>0.160097</td>
-      <td>0.117180</td>
-      <td>0.969767</td>
-      <td>00:15</td>
+      <td>3.108469</td>
+      <td>2.665389</td>
+      <td>0.248082</td>
+      <td>00:02</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>0.119194</td>
-      <td>0.105545</td>
-      <td>0.970253</td>
-      <td>00:15</td>
+      <td>2.820438</td>
+      <td>2.508861</td>
+      <td>0.304348</td>
+      <td>00:02</td>
     </tr>
   </tbody>
 </table>
-
-
-```python
-interp = ClassificationInterpretation.from_learner(learn)
-interp.plot_confusion_matrix()
-```
-
-
-
-
-
-
-![png](docs/images/output_21_1.png)
 
