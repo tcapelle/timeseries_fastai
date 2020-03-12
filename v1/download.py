@@ -3,7 +3,7 @@ from typing import Union
 import os
 import shutil
 import requests
-from fastprogress import progress_bar
+from fastprogress.fastprogress import progress_bar
 import zipfile
 
 
