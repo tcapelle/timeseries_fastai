@@ -64,8 +64,13 @@ URLs.UCR = 'http://www.timeseriesclassification.com/Downloads/Archives/Univariat
 @delegates(untar_data)
 def get_ucr(**kwargs):
     "zipped file has different name as .zip"
-    ucr_path_2018 = untar_data(URLs.UCR, **kwargs)
-    return ucr_path_2018.parent/ucr_path_2018.name.replace('2018', '')
+    ucr_path = untar_data(URLs.UCR, **kwargs)
+    if not ucr_path.exists():
+        zf = zipfile.ZipFile(URLs.path(URLs.UCR))
+        actual_folder = ucr_path.parent/zf.namelist()[0]
+        actual_folder.rename(ucr_path)
+        print(f'Renaming {actual_folder} to {ucr_path}')
+    return ucr_path
 
 # Cell
 # "this functions are based on https://github.com/mb4310/Time-Series"

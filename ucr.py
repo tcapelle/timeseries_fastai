@@ -44,6 +44,7 @@ def max_bs(N):
 def get_dls(path, task, bs=None, workers=None):
     df_train, df_test = load_df_ucr(path, task)
     bs = ifnone(bs, max_bs(len(df_train)))
+    print(f'bs = {bs}')
     x_cols = df_train.columns[0:-1].to_list()
     return TSDataLoaders.from_dfs(df_train, df_test, x_cols=x_cols, label_col='target', 
                                   bs=bs, num_workers=workers)
@@ -111,6 +112,7 @@ def main(
     with open(filename, 'w') as f:
         f.write('task, acc, acc_max, train_loss, val_loss\n')
         for task in tasks:
+            print(f'Training for {epochs} epochs with lr = {lr}')
             dls = get_dls(PATH, task)
             learn = Learner(dls, model=get_model(dls, arch), opt_func=opt_func, \
                     metrics=[accuracy], loss_func=LabelSmoothingCrossEntropy())
