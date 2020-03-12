@@ -4,6 +4,7 @@ from timeseries_fastai.imports import *
 from timeseries_fastai.data import *
 from timeseries_fastai.core import *
 from timeseries_fastai.models import *
+from timeseries_fastai.tabular import *
 
 PATH = get_ucr()
 NON_NAN_TASKS = '''ACSF1 Adiac ArrowHead BME Beef BeetleFly BirdChicken CBF Car Chinatown 
@@ -45,15 +46,19 @@ def get_dls(path, task, bs=None, workers=None):
     df_train, df_test = load_df_ucr(path, task)
     bs = ifnone(bs, max_bs(len(df_train)))
     x_cols = df_train.columns[0:-1].to_list()
-    return TSDataLoaders.from_dfs(df_train, df_test, x_cols=x_cols, label_col='target', 
-                                  bs=bs, num_workers=workers)
+    
+    df_main = stack_train_valid(df_train, df_test)
+    splits=[range_of(df_train), list(range(len(df_train), len(df_main)))]
+    to = TSPandas(df_main, [Normalize], x_names=x_cols, y_names='target', splits=splits)
+    
+    return to.dataloaders(bs, 2*bs)
 
 def get_model(dls, arch):
-    num_classes = len(dls.vocab)
+    num_classes = dls.c
     arch = arch.lower()
     if arch=='resnet':     model = create_resnet(1, num_classes, conv_sizes=[64, 128, 256])
     elif arch=='fcn':      model = create_fcn(1, num_classes, ks=9, conv_sizes=[128, 256, 128])
-    elif arch=='mlp':      model = create_mlp(dls.train_ds[0][0].shape[1], num_classes)
+    elif arch=='mlp':      model = create_mlp(dls.train.one_batch()[0].shape[-1], num_classes)
     elif arch=='inception':model = create_inception(1, num_classes)
     else: 
         print('Please chosse a model in [resnet, FCN, MLP, inception]')
@@ -115,7 +120,7 @@ def main(
             dls = get_dls(PATH, task)
             print(f'Training for {epochs} epochs with lr = {lr} with bs={dls.train.bs, dls.valid.bs}')
             learn = Learner(dls, model=get_model(dls, arch), opt_func=opt_func, \
-                    metrics=[accuracy], loss_func=LabelSmoothingCrossEntropy())
+                    metrics=[accuracy])
             if fp16: learn = learn.to_fp16()
             cbs = MixUp(mixup) if mixup else []
             if sched == 'flat_cos':    learn.fit_flat_cos(epochs, lr, wd=1e-2, cbs=cbs)
