@@ -2,7 +2,7 @@
   "timeseries_fastai": {
     "Overview": "/",
     "Core": "/core",
-    "Data": "/data",
+    "Data": "/tabular",
     "Timeseries Models": "/models"
   }
 }

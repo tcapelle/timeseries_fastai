@@ -9,7 +9,7 @@ index = {"maybe_unsqueeze": "00_core.ipynb",
          "get_ucr": "00_core.ipynb",
          "load_df_ucr": "00_core.ipynb",
          "TSBlock": "01_data.ipynb",
-         "stack_train_valid": "01_data.ipynb",
+         "stack_train_valid": "03_tabular.ipynb",
          "TSDataLoaders": "01_data.ipynb",
          "act_fn": "02_models.ipynb",
          "AdaptiveConcatPool1d": "02_models.ipynb",
@@ -20,11 +20,20 @@ index = {"maybe_unsqueeze": "00_core.ipynb",
          "Shortcut": "02_models.ipynb",
          "conv": "02_models.ipynb",
          "InceptionModule": "02_models.ipynb",
-         "create_inception": "02_models.ipynb"}
+         "create_inception": "02_models.ipynb",
+         "TabularTS": "03_tabular.ipynb",
+         "TSPandas": "03_tabular.ipynb",
+         "setups": "03_tabular.ipynb",
+         "encodes": "03_tabular.ipynb",
+         "decodes": "03_tabular.ipynb",
+         "NormalizeTS": "03_tabular.ipynb",
+         "ReadTSBatch": "03_tabular.ipynb",
+         "TabularTSDataloader": "03_tabular.ipynb"}
 
 modules = ["core.py",
            "data.py",
-           "models.py"]
+           "models.py",
+           "tabular.py"]
 
 doc_url = "https://tcapelle.github.io/timeseries_fastai/"
 

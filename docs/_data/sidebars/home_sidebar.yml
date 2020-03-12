@@ -14,7 +14,7 @@ entries:
       url: /core
     - output: web,pdf
       title: Data
-      url: /data
+      url: /tabular
     - output: web,pdf
       title: Timeseries Models
       url: /models
