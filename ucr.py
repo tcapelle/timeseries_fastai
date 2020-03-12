@@ -44,7 +44,6 @@ def max_bs(N):
 def get_dls(path, task, bs=None, workers=None):
     df_train, df_test = load_df_ucr(path, task)
     bs = ifnone(bs, max_bs(len(df_train)))
-    print(f'bs = {bs}')
     x_cols = df_train.columns[0:-1].to_list()
     return TSDataLoaders.from_dfs(df_train, df_test, x_cols=x_cols, label_col='target', 
                                   bs=bs, num_workers=workers)
@@ -87,6 +86,7 @@ def main(
     gpu:     Param("GPU to run on", int)=None,
     #opt params:
     opt:     Param("Optimizer (adam,rms,sgd,ranger)", str)='ranger',
+    sched:   Param("Scheduler (flat_cos, one_cyle, flat)", str)='flat_cos',
     sqrmom:  Param("sqr_mom", float)=0.99,
     mom:     Param("Momentum", float)=0.9,
     eps:     Param("epsilon", float)=1e-6,
@@ -112,11 +112,13 @@ def main(
     with open(filename, 'w') as f:
         f.write('task, acc, acc_max, train_loss, val_loss\n')
         for task in tasks:
-            print(f'Training for {epochs} epochs with lr = {lr}')
             dls = get_dls(PATH, task)
+            print(f'Training for {epochs} epochs with lr = {lr} with bs={dls.train.bs, dls.valid.bs}')
             learn = Learner(dls, model=get_model(dls, arch), opt_func=opt_func, \
                     metrics=[accuracy], loss_func=LabelSmoothingCrossEntropy())
             if fp16: learn = learn.to_fp16()
             cbs = MixUp(mixup) if mixup else []
-            learn.fit_flat_cos(epochs, lr, wd=1e-2, cbs=cbs)
+            if sched == 'flat_cos':    learn.fit_flat_cos(epochs, lr, wd=1e-2, cbs=cbs)
+            elif sched == 'one_cycle': learn.fit_one_cycle(epochs, lr, wd=1e-2, cbs=cbs)
+            else:                      learn.fit(epochs, lr, wd=1e-2, cbs=cbs)
             f.write(task +', '+ list2csv(compute_metrics(learn)))
