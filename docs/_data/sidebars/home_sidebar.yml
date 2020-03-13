@@ -18,6 +18,9 @@ entries:
     - output: web,pdf
       title: Timeseries Models
       url: /models
+    - output: web,pdf
+      title: Benchmark tests
+      url: /testing
     output: web
     title: timeseries_fastai
   output: web

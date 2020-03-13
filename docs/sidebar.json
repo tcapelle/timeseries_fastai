@@ -3,6 +3,7 @@
     "Overview": "/",
     "Core": "/core",
     "Data": "/tabular",
-    "Timeseries Models": "/models"
+    "Timeseries Models": "/models",
+    "Benchmark tests": "/testing"
   }
 }
