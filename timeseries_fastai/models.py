@@ -8,10 +8,10 @@ from .core import *
 import torch
 import torch.nn as nn
 from fastcore.all import *
-from fastai2.basics import *
-from fastai2.torch_core import *
-from fastai2.layers import *
-from fastai2.vision import *
+from fastai.basics import *
+from fastai.torch_core import *
+from fastai.layers import *
+from fastai.vision import *
 
 # Cell
 act_fn = nn.ReLU(inplace=True)

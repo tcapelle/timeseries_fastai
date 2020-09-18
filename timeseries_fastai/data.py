@@ -5,9 +5,9 @@ __all__ = ['TSBlock', 'stack_train_valid', 'TSDataLoaders']
 # Cell
 from .imports import *
 from .core import *
-from fastai2.basics import *
-from fastai2.torch_core import *
-from fastai2.vision.data import get_grid
+from fastai.basics import *
+from fastai.torch_core import *
+from fastai.vision.data import get_grid
 
 # Cell
 def TSBlock(cls=TSeries):
@@ -30,7 +30,7 @@ class TSDataLoaders(DataLoaders):
         y_block = ifnone(y_block, CategoryBlock)
         splitter = RandomSplitter(valid_pct, seed=seed) if valid_col is None else ColSplitter(valid_col)
         dblock = DataBlock(blocks=(TSBlock, y_block),
-                           get_x=lambda o: o[x_cols].astype(np.float32),
+                           get_x=lambda o: o[x_cols].values.astype(np.float32),
                            get_y=ColReader(label_col),
                            splitter=splitter,
                            item_tfms=item_tfms,
@@ -49,6 +49,6 @@ class TSDataLoaders(DataLoaders):
 @typedispatch
 def show_batch(x: TSeries, y, samples, ctxs=None, max_n=10,rows=None, cols=None, figsize=None, **kwargs):
     "Show batch for TSeries objects"
-    if ctxs is None: ctxs = get_grid(min(len(samples), max_n), rows=rows, cols=cols, add_vert=1, figsize=figsize)
+    if ctxs is None: ctxs = get_grid(min(len(samples), max_n), nrows=rows, ncols=cols, add_vert=1, figsize=figsize)
     ctxs = show_batch[object](x, y, samples=samples, ctxs=ctxs, max_n=max_n, **kwargs)
     return ctxs

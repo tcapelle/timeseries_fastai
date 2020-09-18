@@ -1,11 +1,14 @@
 ---
 
-title: Data
+title: Tabular inspired Data
+
 
 keywords: fastai
 sidebar: home_sidebar
 
 summary: "DataBlock API to construct the DataLoaders"
+description: "DataBlock API to construct the DataLoaders"
+nb_path: "nbs/03_tabular.ipynb"
 ---
 <!--
 
@@ -18,14 +21,21 @@ summary: "DataBlock API to construct the DataLoaders"
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We will create a DataBlock to process our UCR datasets</p>
@@ -33,6 +43,8 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -46,6 +58,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -64,7 +80,7 @@ summary: "DataBlock API to construct the DataLoaders"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Loading files from: /home/tc256760/.fastai/data/Univariate2018_arff/StarLightCurves
+<pre>Loading files from: /home/tcapelle/.fastai/data/Univariate2018_arff/StarLightCurves
 </pre>
 </div>
 </div>
@@ -73,6 +89,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -266,6 +286,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -296,9 +320,17 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -320,6 +352,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -333,6 +369,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -380,9 +420,17 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -392,7 +440,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="TSPandas" class="doc_header"><code>class</code> <code>TSPandas</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L69" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>TSPandas</code>(<strong><code>df</code></strong>, <strong><code>procs</code></strong>=<em><code>None</code></em>, <strong><code>x_names</code></strong>=<em><code>None</code></em>, <strong><code>y_names</code></strong>=<em><code>None</code></em>, <strong><code>block_y</code></strong>=<em><code>None</code></em>, <strong><code>splits</code></strong>=<em><code>None</code></em>, <strong><code>do_setup</code></strong>=<em><code>True</code></em>, <strong><code>device</code></strong>=<em><code>None</code></em>, <strong><code>inplace</code></strong>=<em><code>False</code></em>) :: <a href="/timeseries_fastai/tabular#TabularTS"><code>TabularTS</code></a></p>
+<h2 id="TSPandas" class="doc_header"><code>class</code> <code>TSPandas</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L69" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>TSPandas</code>(<strong><code>df</code></strong>, <strong><code>procs</code></strong>=<em><code>None</code></em>, <strong><code>x_names</code></strong>=<em><code>None</code></em>, <strong><code>y_names</code></strong>=<em><code>None</code></em>, <strong><code>block_y</code></strong>=<em><code>None</code></em>, <strong><code>splits</code></strong>=<em><code>None</code></em>, <strong><code>do_setup</code></strong>=<em><code>True</code></em>, <strong><code>device</code></strong>=<em><code>None</code></em>, <strong><code>inplace</code></strong>=<em><code>False</code></em>) :: <a href="/timeseries_fastai/tabular.html#TabularTS"><code>TabularTS</code></a></p>
 </blockquote>
 <p>A <code>DataFrame</code> wrapper that knows which cols are x/y, and returns rows in <code>__getitem__</code></p>
 
@@ -404,9 +452,17 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -420,6 +476,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -470,12 +530,24 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -485,7 +557,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="setups" class="doc_header"><code>setups</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>setups</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular#TabularTS"><code>TabularTS</code></a>)</p>
+<h4 id="setups" class="doc_header"><code>setups</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>setups</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular.html#TabularTS"><code>TabularTS</code></a>)</p>
 </blockquote>
 
 </div>
@@ -496,6 +568,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -505,7 +581,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="encodes" class="doc_header"><code>encodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L126" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular#TabularTS"><code>TabularTS</code></a>)</p>
+<h4 id="encodes" class="doc_header"><code>encodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L126" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular.html#TabularTS"><code>TabularTS</code></a>)</p>
 </blockquote>
 
 </div>
@@ -516,6 +592,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -525,7 +605,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="decodes" class="doc_header"><code>decodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>decodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular#TabularTS"><code>TabularTS</code></a>)</p>
+<h4 id="decodes" class="doc_header"><code>decodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>decodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular.html#TabularTS"><code>TabularTS</code></a>)</p>
 </blockquote>
 
 </div>
@@ -536,9 +616,17 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -560,9 +648,17 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -572,7 +668,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="setups" class="doc_header"><code>setups</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>setups</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular#TabularTS"><code>TabularTS</code></a>)</p>
+<h4 id="setups" class="doc_header"><code>setups</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>setups</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular.html#TabularTS"><code>TabularTS</code></a>)</p>
 </blockquote>
 
 </div>
@@ -583,6 +679,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -592,7 +692,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="encodes" class="doc_header"><code>encodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L126" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular#TabularTS"><code>TabularTS</code></a>)</p>
+<h4 id="encodes" class="doc_header"><code>encodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L126" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>encodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular.html#TabularTS"><code>TabularTS</code></a>)</p>
 </blockquote>
 
 </div>
@@ -603,6 +703,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -612,7 +716,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="decodes" class="doc_header"><code>decodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>decodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular#TabularTS"><code>TabularTS</code></a>)</p>
+<h4 id="decodes" class="doc_header"><code>decodes</code><a href="https://github.com/tcapelle/timeseries_fastai/tree/master/timeseries_fastai/tabular.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>decodes</code>(<strong><code>to</code></strong>:<a href="/timeseries_fastai/tabular.html#TabularTS"><code>TabularTS</code></a>)</p>
 </blockquote>
 
 </div>
@@ -623,6 +727,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -643,12 +751,24 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -670,6 +790,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -683,6 +807,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -703,7 +831,7 @@ summary: "DataBlock API to construct the DataLoaders"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Pipeline: Categorize</pre>
+<pre>Pipeline: Categorize -- {&#39;vocab&#39;: None, &#39;sort&#39;: True, &#39;add_na&#39;: False}</pre>
 </div>
 
 </div>
@@ -712,6 +840,8 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's check we get the encoded batch</p>
@@ -719,6 +849,8 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -732,6 +864,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -745,6 +881,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -774,6 +914,8 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This function needs to be redone</p>
@@ -781,12 +923,22 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -808,6 +960,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -822,6 +978,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -835,6 +995,8 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Quick function to test the performance of the DL</p>
@@ -842,6 +1004,8 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -857,6 +1021,10 @@ summary: "DataBlock API to construct the DataLoaders"
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -875,8 +1043,8 @@ summary: "DataBlock API to construct the DataLoaders"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 128 ms, sys: 0 ns, total: 128 ms
-Wall time: 127 ms
+<pre>CPU times: user 79.4 ms, sys: 0 ns, total: 79.4 ms
+Wall time: 79.2 ms
 </pre>
 </div>
 </div>
@@ -885,9 +1053,17 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -909,12 +1085,16 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Integration-Example">Integration Example<a class="anchor-link" href="#Integration-Example">&#182;</a></h1>
+<h1 id="Integration-Example">Integration Example<a class="anchor-link" href="#Integration-Example"> </a></h1>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -928,6 +1108,10 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -943,6 +1127,10 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -956,6 +1144,10 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -969,6 +1161,10 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -982,6 +1178,10 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -995,6 +1195,10 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1024,12 +1228,16 @@ Wall time: 127 ms
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1056,37 +1264,16 @@ Wall time: 127 ms
   <tbody>
     <tr>
       <td>0</td>
-      <td>0.432521</td>
-      <td>1.136832</td>
-      <td>0.579165</td>
+      <td>0.416130</td>
+      <td>0.789467</td>
+      <td>0.705925</td>
       <td>00:02</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>0.321747</td>
-      <td>0.283586</td>
-      <td>0.890845</td>
-      <td>00:02</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>0.264976</td>
-      <td>0.187981</td>
-      <td>0.940991</td>
-      <td>00:02</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>0.203415</td>
-      <td>0.139864</td>
-      <td>0.960175</td>
-      <td>00:02</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>0.158031</td>
-      <td>0.142026</td>
-      <td>0.956289</td>
+      <td>0.280428</td>
+      <td>0.187600</td>
+      <td>0.949369</td>
       <td>00:02</td>
     </tr>
   </tbody>
@@ -1100,6 +1287,7 @@ Wall time: 127 ms
 
 </div>
     {% endraw %}
+
 </div>
  
 

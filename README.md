@@ -4,7 +4,7 @@
 
 ## Installation
 
-You will need to install fastai V2 from [here](https://github.com/fastai/fastai2) and then you can do from within the environment where you installed fastai V2:
+You will need to install fastai V2 from [here](https://github.com/fastai/fastai) and then you can do from within the environment where you installed fastai V2:
 
 ```bash
 pip install timeseries_fastai
@@ -14,11 +14,11 @@ and you are good to go.
 
 ### TL;DR
 ```bash
-git clone https://github.com/fastai/fastai2
-cd fastai2
+git clone https://github.com/fastai/fastai
+cd fastai
 conda env create -f environment.yml
-source activate fastai2
-pip install fastai2 timeseries_fastai
+source activate fastai
+pip install fastai timeseries_fastai
 
 ```
 
@@ -90,74 +90,74 @@ results_inception.head(10)
   </thead>
   <tbody>
     <tr>
+      <th>ACSF1</th>
+      <td>0.82</td>
+      <td>0.85</td>
+      <td>0.77</td>
+      <td>0.62</td>
+    </tr>
+    <tr>
       <th>Adiac</th>
-      <td>0.83</td>
-      <td>0.83</td>
-      <td>1.54</td>
-      <td>1.31</td>
+      <td>0.77</td>
+      <td>0.77</td>
+      <td>0.81</td>
+      <td>0.89</td>
     </tr>
     <tr>
       <th>ArrowHead</th>
-      <td>0.84</td>
-      <td>0.89</td>
-      <td>0.47</td>
-      <td>0.60</td>
+      <td>0.70</td>
+      <td>0.76</td>
+      <td>0.28</td>
+      <td>1.21</td>
+    </tr>
+    <tr>
+      <th>BME</th>
+      <td>0.85</td>
+      <td>0.88</td>
+      <td>0.21</td>
+      <td>0.79</td>
     </tr>
     <tr>
       <th>Beef</th>
-      <td>0.57</td>
-      <td>0.60</td>
-      <td>1.22</td>
-      <td>1.27</td>
+      <td>0.77</td>
+      <td>0.83</td>
+      <td>0.50</td>
+      <td>0.53</td>
     </tr>
     <tr>
       <th>BeetleFly</th>
+      <td>0.70</td>
       <td>0.85</td>
-      <td>1.00</td>
-      <td>0.29</td>
-      <td>0.38</td>
+      <td>0.14</td>
+      <td>0.79</td>
     </tr>
     <tr>
       <th>BirdChicken</th>
-      <td>0.80</td>
       <td>0.95</td>
-      <td>0.25</td>
-      <td>0.55</td>
-    </tr>
-    <tr>
-      <th>Car</th>
-      <td>0.85</td>
-      <td>0.85</td>
-      <td>0.58</td>
-      <td>0.74</td>
+      <td>0.95</td>
+      <td>0.14</td>
+      <td>0.20</td>
     </tr>
     <tr>
       <th>CBF</th>
-      <td>0.99</td>
-      <td>1.00</td>
-      <td>0.44</td>
-      <td>0.37</td>
+      <td>0.95</td>
+      <td>0.97</td>
+      <td>0.22</td>
+      <td>0.24</td>
     </tr>
     <tr>
-      <th>ChlorineConcentration</th>
-      <td>0.77</td>
-      <td>0.77</td>
-      <td>0.61</td>
-      <td>0.70</td>
-    </tr>
-    <tr>
-      <th>CinCECGTorso</th>
-      <td>0.65</td>
+      <th>Car</th>
+      <td>0.60</td>
       <td>0.68</td>
-      <td>0.64</td>
-      <td>1.06</td>
+      <td>0.33</td>
+      <td>1.23</td>
     </tr>
     <tr>
-      <th>Coffee</th>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.33</td>
-      <td>0.21</td>
+      <th>Chinatown</th>
+      <td>0.95</td>
+      <td>0.96</td>
+      <td>0.05</td>
+      <td>0.27</td>
     </tr>
   </tbody>
 </table>
@@ -182,7 +182,7 @@ PATH = Path.cwd().parent
 df_train, df_test = load_df_ucr(PATH, 'Adiac')
 ```
 
-    Loading files from: /home/tc256760/Documents/timeseries_fastai/Adiac
+    Loading files from: /home/tcapelle/SteadySun/timeseries_fastai/Adiac
 
 
 ```python
@@ -227,38 +227,38 @@ learn.fit_one_cycle(5, 1e-3)
   <tbody>
     <tr>
       <td>0</td>
-      <td>3.948751</td>
-      <td>3.637887</td>
-      <td>0.028133</td>
-      <td>00:02</td>
+      <td>3.923817</td>
+      <td>3.641004</td>
+      <td>0.030691</td>
+      <td>00:01</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>3.705492</td>
-      <td>3.507715</td>
-      <td>0.094629</td>
-      <td>00:02</td>
+      <td>3.678824</td>
+      <td>3.488305</td>
+      <td>0.107417</td>
+      <td>00:01</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>3.418483</td>
-      <td>5.099520</td>
-      <td>0.038363</td>
-      <td>00:02</td>
+      <td>3.440019</td>
+      <td>3.159753</td>
+      <td>0.153453</td>
+      <td>00:01</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>3.108469</td>
-      <td>2.665389</td>
-      <td>0.248082</td>
-      <td>00:02</td>
+      <td>3.089422</td>
+      <td>2.506488</td>
+      <td>0.301790</td>
+      <td>00:01</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>2.820438</td>
-      <td>2.508861</td>
-      <td>0.304348</td>
-      <td>00:02</td>
+      <td>2.762558</td>
+      <td>2.371680</td>
+      <td>0.306905</td>
+      <td>00:01</td>
     </tr>
   </tbody>
 </table>

@@ -6,10 +6,10 @@ __all__ = ['TabularTS', 'TSPandas', 'setups', 'encodes', 'decodes', 'NormalizeTS
 # Cell
 from .imports import *
 from .core import *
-from fastai2.basics import *
-from fastai2.torch_core import *
-from fastai2.vision.data import get_grid
-from fastai2.tabular.core import TabularProc, _TabIloc
+from fastai.basics import *
+from fastai.torch_core import *
+from fastai.vision.data import get_grid
+from fastai.tabular.core import TabularProc, _TabIloc
 
 # Cell
 class TabularTS(CollBase, GetAttr, FilteredBase):

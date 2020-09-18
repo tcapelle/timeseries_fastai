@@ -11,16 +11,19 @@ entries:
       url: /
     - output: web,pdf
       title: Core
-      url: /core
+      url: core.html
     - output: web,pdf
       title: Data
-      url: /tabular
+      url: data.html
     - output: web,pdf
       title: Timeseries Models
-      url: /models
+      url: models.html
+    - output: web,pdf
+      title: Tabular inspired Data
+      url: tabular.html
     - output: web,pdf
       title: Benchmark tests
-      url: /testing
+      url: testing.html
     output: web
     title: timeseries_fastai
   output: web
