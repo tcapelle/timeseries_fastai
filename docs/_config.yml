@@ -3,7 +3,7 @@ output: web
 topnav_title: timeseries_fastai
 site_title: timeseries_fastai
 company_name: Thomas Capelle
-description: A timeseries lib on top of fastai2
+description: A timeseries lib on top of fastai
 # Set to false to disable KaTeX math
 use_math: true
 # Add Google analytics id if you have one and want to use it here
