@@ -1,0 +1,2 @@
+task, acc, acc_max, train_loss, val_loss
+Adiac, 0.77, 0.78, 0.77, 0.79
