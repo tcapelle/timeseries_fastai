@@ -6,7 +6,7 @@ from timeseries_fastai.core import *
 from timeseries_fastai.models import *
 from timeseries_fastai.tabular import *
 
-PATH = get_ucr()
+PATH = untar_data(URLs.UCR)
 NON_NAN_TASKS = '''ACSF1 Adiac ArrowHead BME Beef BeetleFly BirdChicken CBF Car Chinatown 
 ChlorineConcentration CinCECGTorso Coffee Computers CricketX CricketY CricketZ Crop 
 DiatomSizeReduction DistalPhalanxOutlineAgeGroup DistalPhalanxOutlineCorrect 
