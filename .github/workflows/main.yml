@@ -20,7 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     container: fastai/jekyll
     steps:
-    - uses: actions/checkout@v2
+    - name: Dowload Data
+      run: |
+        mkdir -p $HOME/.fastai/data
+        mkdir -p $HOME./fastai/archive
+        ipython download_data.py
+        ls $HOME/.fastai/data
+
     - name: Run tests
       run: |
         pip install -qe .
