@@ -27,8 +27,7 @@ jobs:
         pip install -qU fastcore
     - name: Test Notebooks
       run: |
-        nbdev_test_nbs "nbs/*.ipynb"
-  
+        nbdev_test_nbs --flags '' --n_workers 3 --pause 1.0 --fname "nbs/*ipynb"
   fastpages-integration:
     runs-on: ubuntu-latest
     container: fastai/jekyll
