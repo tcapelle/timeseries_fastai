@@ -83,7 +83,7 @@ def list2csv(a, sep=', '):
 
 @call_parse
 def main(
-    arch:    Param("Network arch. [resnet, FCN, MLP, inception, All]."str)='resnet',
+    arch:    Param("Network arch. [resnet, FCN, MLP, inception, All].", str)='resnet',
     tasks:   Param("Which tasks from UCR to run, [task, All].", str)='Adiac',
     epochs:  Param("Number of epochs.", int)=40,
     lr:      Param("Learning rate.", float)=1e-3, 
