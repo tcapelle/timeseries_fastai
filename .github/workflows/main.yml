@@ -25,6 +25,8 @@ jobs:
       run: |
         pip install -qe .
         pip install -qU fastcore
+        mkdir -p $HOME/.fastai/data
+        mkdir -p $HOME/.fastai/archive
     - name: Test Notebooks
       run: |
         nbdev_test_nbs --flags '' --n_workers 3 --pause 1.0 --fname "nbs/*ipynb"
