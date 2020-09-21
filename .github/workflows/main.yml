@@ -18,22 +18,21 @@ jobs:
 
   nbdev_test_nbs:
     runs-on: ubuntu-latest
-    container: fastai/jekyll
+    container: fastai/fastai
     steps:
-    - name: Dowload Data
-      run: |
-        mkdir -p $HOME/.fastai/data
-        mkdir -p $HOME./fastai/archive
-        ls
-        ipython download_data.py
-        ls $HOME/.fastai/data
-
-    - name: Run tests
+    - uses: actions/checkout@v2
+    - name: Install Library 
       run: |
         pip install -qe .
         pip install -qU fastcore
-        make test
-
+    - name: Downlaod Data
+      run: |
+        mkdir -p $HOME/.fastai/data
+        mkdir -p $HOME/.fastai/archive
+        python download_data.py 
+    - name: Test Notebooks
+      run: |
+        nbdev_test_nbs --flags '' --n_workers 3 --pause 1.0 --fname "nbs/*ipynb"
   fastpages-integration:
     runs-on: ubuntu-latest
     container: fastai/jekyll
