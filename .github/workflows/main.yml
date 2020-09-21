@@ -22,8 +22,6 @@ jobs:
     steps:
     - name: Run tests
       run: |
-        mkdir -p $HOME/.fastai/data
-        mkdir -p $HOME./fastai/archive
         pip install -qe .
         pip install -qU fastcore
         ls -lh
