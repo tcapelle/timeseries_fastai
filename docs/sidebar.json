@@ -4,7 +4,6 @@
     "Core": "core.html",
     "Data": "data.html",
     "Timeseries Models": "models.html",
-    "Tabular inspired Data": "tabular.html",
-    "Benchmark tests": "testing.html"
+    "Tabular inspired Data": "tabular.html"
   }
 }

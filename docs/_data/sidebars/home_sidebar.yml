@@ -21,9 +21,6 @@ entries:
     - output: web,pdf
       title: Tabular inspired Data
       url: tabular.html
-    - output: web,pdf
-      title: Benchmark tests
-      url: testing.html
     output: web
     title: timeseries_fastai
   output: web

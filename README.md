@@ -44,12 +44,12 @@ You can run the benchmark using:
 - `epochs` = 40
 - `fp16` = True
 
-```python
+```
 import pandas as pd
 from pathlib import Path
 ```
 
-```python
+```
 results_inception = pd.read_csv(Path.cwd().parent/'inception.csv', index_col=0)
 results_inception.head(10)
 ```
@@ -167,33 +167,33 @@ results_inception.head(10)
 
 ## Getting Started
 
-```python
+```
 from timeseries_fastai.imports import *
 from timeseries_fastai.core import *
 from timeseries_fastai.data import *
 from timeseries_fastai.models import *
 ```
 
-```python
+```
 PATH = Path.cwd().parent
 ```
 
-```python
+```
 df_train, df_test = load_df_ucr(PATH, 'Adiac')
 ```
 
     Loading files from: /home/tcapelle/SteadySun/timeseries_fastai/Adiac
 
 
-```python
+```
 x_cols = df_train.columns[0:-2].to_list()
 ```
 
-```python
+```
 dls = TSDataLoaders.from_dfs(df_train, df_test, x_cols=x_cols, label_col='target', bs=16)
 ```
 
-```python
+```
 dls.show_batch()
 ```
 
@@ -201,16 +201,16 @@ dls.show_batch()
 ![png](docs/images/output_17_0.png)
 
 
-```python
+```
 inception = create_inception(1, len(dls.vocab))
 ```
 
-```python
+```
 learn = Learner(dls, inception, metrics=[accuracy])
 ```
 
-```python
-learn.fit_one_cycle(5, 1e-3)
+```
+learn.fit_one_cycle(1, 1e-3)
 ```
 
 
@@ -227,37 +227,9 @@ learn.fit_one_cycle(5, 1e-3)
   <tbody>
     <tr>
       <td>0</td>
-      <td>3.923817</td>
-      <td>3.641004</td>
-      <td>0.030691</td>
-      <td>00:01</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>3.678824</td>
-      <td>3.488305</td>
-      <td>0.107417</td>
-      <td>00:01</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>3.440019</td>
-      <td>3.159753</td>
-      <td>0.153453</td>
-      <td>00:01</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>3.089422</td>
-      <td>2.506488</td>
-      <td>0.301790</td>
-      <td>00:01</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>2.762558</td>
-      <td>2.371680</td>
-      <td>0.306905</td>
+      <td>3.939292</td>
+      <td>3.701253</td>
+      <td>0.025575</td>
       <td>00:01</td>
     </tr>
   </tbody>

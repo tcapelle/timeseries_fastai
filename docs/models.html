@@ -43,7 +43,7 @@ nb_path: "nbs/02_models.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># batch of 16 items with 1 channels and lenght 20</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># batch of 16 items with 1 channels and lenght 20</span>
 </pre></div>
 
     </div>
@@ -85,7 +85,7 @@ nb_path: "nbs/02_models.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="AdaptiveConcatPool1d" class="doc_header"><code>class</code> <code>AdaptiveConcatPool1d</code><a href="https://github.com/fastai/fastai/tree/master/fastai/layers.py#L103" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AdaptiveConcatPool1d</code>(<strong><code>size</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
+<h2 id="AdaptiveConcatPool1d" class="doc_header"><code>class</code> <code>AdaptiveConcatPool1d</code><a href="https://github.com/fastai/fastai/tree/master/fastai/layers.py#L102" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AdaptiveConcatPool1d</code>(<strong><code>size</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
 </blockquote>
 <p>Layer that concats <code>AdaptiveAvgPool1d</code> and <code>AdaptiveMaxPool1d</code></p>
 
@@ -210,7 +210,7 @@ nb_path: "nbs/02_models.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>torch.Size([16, 37])</pre>
+<pre>torch.Size([2, 37])</pre>
 </div>
 
 </div>
@@ -339,7 +339,7 @@ nb_path: "nbs/02_models.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>torch.Size([16, 37])</pre>
+<pre>torch.Size([2, 37])</pre>
 </div>
 
 </div>
@@ -395,7 +395,7 @@ nb_path: "nbs/02_models.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resb</span> <span class="o">=</span> <span class="n">res_block_1d</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resb</span> <span class="o">=</span> <span class="n">res_block_1d</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">resb</span>
 </pre></div>
 
@@ -414,13 +414,13 @@ nb_path: "nbs/02_models.ipynb"
 <pre>SequentialEx(
   (layers): ModuleList(
     (0): ConvLayer(
-      (0): Conv1d(64, 64, kernel_size=(5,), stride=(1,), padding=(2,), bias=False)
-      (1): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (0): Conv1d(16, 16, kernel_size=(5,), stride=(1,), padding=(2,), bias=False)
+      (1): BatchNorm1d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
       (2): ReLU()
     )
     (1): ConvLayer(
-      (0): Conv1d(64, 64, kernel_size=(3,), stride=(1,), padding=(1,), bias=False)
-      (1): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (0): Conv1d(16, 16, kernel_size=(3,), stride=(1,), padding=(1,), bias=False)
+      (1): BatchNorm1d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
     )
     (2): MergeLayer()
   )
@@ -442,7 +442,7 @@ nb_path: "nbs/02_models.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resb</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resb</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 
     </div>
@@ -457,7 +457,7 @@ nb_path: "nbs/02_models.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>torch.Size([16, 64, 100])</pre>
+<pre>torch.Size([2, 16, 100])</pre>
 </div>
 
 </div>
@@ -622,7 +622,7 @@ nb_path: "nbs/02_models.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>torch.Size([16, 37])</pre>
+<pre>torch.Size([2, 37])</pre>
 </div>
 
 </div>
@@ -764,7 +764,7 @@ nb_path: "nbs/02_models.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">im</span> <span class="o">=</span> <span class="n">InceptionModule</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">nb_filters</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">im</span> <span class="o">=</span> <span class="n">InceptionModule</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">nb_filters</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
 <span class="n">im</span>
 </pre></div>
 
@@ -781,7 +781,7 @@ nb_path: "nbs/02_models.ipynb"
 
 <div class="output_text output_subarea output_execute_result">
 <pre>InceptionModule(
-  (bottleneck): Conv1d(64, 32, kernel_size=(1,), stride=(1,), bias=False)
+  (bottleneck): Conv1d(8, 32, kernel_size=(1,), stride=(1,), bias=False)
   (convs): ModuleList(
     (0): Conv1d(32, 32, kernel_size=(39,), stride=(1,), padding=(19,), bias=False)
     (1): Conv1d(32, 32, kernel_size=(19,), stride=(1,), padding=(9,), bias=False)
@@ -789,7 +789,7 @@ nb_path: "nbs/02_models.ipynb"
   )
   (conv_bottle): Sequential(
     (0): MaxPool1d(kernel_size=3, stride=1, padding=1, dilation=1, ceil_mode=False)
-    (1): Conv1d(64, 32, kernel_size=(1,), stride=(1,), bias=False)
+    (1): Conv1d(8, 32, kernel_size=(1,), stride=(1,), bias=False)
   )
   (bn_relu): Sequential(
     (0): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
@@ -813,7 +813,7 @@ nb_path: "nbs/02_models.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">im</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">im</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 
     </div>
@@ -828,7 +828,7 @@ nb_path: "nbs/02_models.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>torch.Size([16, 128, 100])</pre>
+<pre>torch.Size([2, 128, 100])</pre>
 </div>
 
 </div>
@@ -1085,7 +1085,7 @@ nb_path: "nbs/02_models.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>torch.Size([16, 37])</pre>
+<pre>torch.Size([2, 37])</pre>
 </div>
 
 </div>
