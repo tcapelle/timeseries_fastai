@@ -20,7 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     container: fastai/jekyll
     steps:
-    - name: Run tests
+      - uses: actions/checkout@v2
+      - name: Run tests
       run: |
         mkdir -p $HOME/.fastai/data
         mkdir -p $HOME./fastai/archive
