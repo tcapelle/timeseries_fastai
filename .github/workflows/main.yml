@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     container: fastai/jekyll
     steps:
+    - uses: actions/checkout@v2
     - name: Run tests
       run: |
         pip install -qe .
