@@ -24,9 +24,10 @@ jobs:
       run: |
         mkdir -p $HOME/.fastai/data
         mkdir -p $HOME./fastai/archive
-        ipython download_data.py
         pip install -qe .
         pip install -qU fastcore
+        ls -lh
+        ipython download_data.py
         make test
 
   fastpages-integration:
