@@ -22,7 +22,6 @@ jobs:
     steps:
       - name: Run tests
       - uses: actions/checkout@v2
-      - name: Run tests
       run: |
         mkdir -p $HOME/.fastai/data
         mkdir -p $HOME./fastai/archive
