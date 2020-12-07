@@ -2,6 +2,8 @@
 > This repository aims to implement TimeSeries classification/regression algorithms. It makes extensive use of fastai V2!
 
 
+> I recommend to use Ignacio's [tsai](https://github.com/timeseriesAI/tsai) for a more complete and robust timeseries fastai based library. It is well documented and implemetns way more models that me here.
+
 ## Installation
 
 You will need to install fastai V2 from [here](https://github.com/fastai/fastai) and then you can do from within the environment where you installed fastai V2:
@@ -903,7 +905,7 @@ dls.show_batch()
 ```
 
 
-![png](docs/images/output_16_0.png)
+![png](docs/images/output_17_0.png)
 
 
 ```python
